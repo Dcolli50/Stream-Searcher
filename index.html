@@ -11,22 +11,54 @@
 </head>
 
 <body>
-   <header class="hero is-primary">
-      <div class="hero-body">
-         <h1 class="title">
+   <!-- Title of the Web Page / Header -->
+   <header class="hero is-primary mb-5">
+      <div class="hero-body has-text-centered">
+         <h1 class="title is-size-1">
             Stream Searcher
          </h1>
+         <p class="subtitile is-size-6">Find Streaming Services for your favourite movies and TV shows!</p>
       </div>
    </header>
 
-   <main class="columns">
-      <form class="control column is-one-third">
-         <label for="search-bar">Movie title</label>
-         <input class="input is-rounded" name="search-bar" id='search-bar' placeholder="Enter title here" type="text">
-         <button id="btn">Search</button>
-      </form>
-   
-       <div id="previous-searches"></div>
+   <!-- Main content of the page. -->
+   <main>
+
+      <!-- First Row -->
+      <div class="columns section">
+      <!-- Form for searching the movies -->
+         <form class="control column field box is-3">
+            
+            <label class="label has-text-centered is-size-3" for="search-bar is-size-1">Movie title</label>
+            <div class="control">
+               <input class="input is-rounded" name="search-bar" id='search-bar' placeholder="Enter title here" type="text">
+
+               <button id="btn" class="mt-5  button is-rounded is-primary is-hovered">Search</button>
+            </div>
+            
+         </form>
+
+         <!-- Movies poster and title area. Poster of the chosen movie will be displayed here. Content will be dynamically genertad through user interaction. -->
+         <figure class="column is-9 section">
+
+         </figure>
+         
+      </div>
+      
+      <!-- Second Row with class list and IMDB info -->
+      
+      <div class="section columns is-variable">
+
+         <div class="column content is-3 box">
+            <ul id="previous-searches" class="list-of-searches">
+               <li class="list-item">Breaking Bad</li>
+               <li class="list-item">Ed Wood</li>
+               <li class="list-item">To kill a Mocking Bird</li>
+            </ul>
+         </div>
+         
+      </div>
+
        <div id="title-poster"></div>
        <div id="imdb-section"></div>
        <div id="streaming-services"></div>

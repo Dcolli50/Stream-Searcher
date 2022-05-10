@@ -1,8 +1,9 @@
-// fetch the streaming services given a movie.
+
+// Making references for the appropriate HTML Elements 
 
 
 // Get the information for movie (Streaming service, release date etc) using the previously obtained ID from GetMovieID function.
-var getMovieInfo = function(id){
+var getMovieInfo = function(id){ 
    // initialize an array to hold all the streaming services
    var streamServiceArr = [];
    var apiUrl = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
@@ -17,7 +18,7 @@ var getMovieInfo = function(id){
             };
          });
       } else {
-         
+         // this will be replace with modals later 
          alert("Streaming Source not Found!");
       }
    })
@@ -45,5 +46,7 @@ var getMovieId = function(movieName){
    });
 };
 
+var saveSearchHistory = function(){
 
+}
 
