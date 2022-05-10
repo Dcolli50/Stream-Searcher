@@ -1,10 +1,13 @@
 
 // Making references for the appropriate HTML Elements 
 var previousSearches = document.querySelector("#previous-searches");
+var searchForm = document.querySelector("#search-form");
+var searchBar = document.querySelector("#search-bar");
 
 
 // Initializing necessary variables
 var currentSearchArr = []; // Array to keep track of user searches.
+
 
 // Get the information for movie (Streaming service, release date etc) using the previously obtained ID from GetMovieID function.
 var getMovieInfo = function(id){ 
@@ -50,15 +53,21 @@ var getMovieId = function(movieName){
    });
 };
 
-// Display movies name in the search history. This function will be called in two different places:
+// Display movie's name in the search history. This function will be called in two different places:
 // When a movie name is searched by the user
 // When movie search history is loaded from localStorage (See: loadSearchHistory function)
 var displaySearchedMovie = function(movieName){
       var movieNameItem = document.createElement("li");
       movieNameItem.classList = "list-item box";
       movieNameItem.textContent = movieName;
+      // Add the name to the currentSearchArr
+      currentSearchArr.push(movieName);
+      // Add in the local Storage
+      saveSearchHistory(currentSearchArr);
       previousSearches.appendChild(movieNameItem);
 };
+
+
 
 
 // This function will take the currentSearchArr and save it in the local storage.
@@ -77,15 +86,39 @@ var loadSearchHistory = function(){
    var storedSearchArr = JSON.parse(localStorage.getItem("Current-Searches"));
    // if no previous data is saved in the local storage, just initialize an emtpy list for current searches.
    if (!storedSearchArr) {
-      currentSearchArr = [];
-   } else {
-      // If there is previous data, then append them in the currSearchArr;
-      currentSearchArr = currentSearchArr.concat(storedSearchArr);
+      storedSearchArr = [];
+      console.log("nothing")
    }
+   console.log(storedSearchArr);
    // append all the movie names stored in the list through a for loop
-   for (var i=0;i<currentSearchArr.length;i++){
-      displaySearchedMovie(currentSearchArr[i]);
+   for (var i=0;i<storedSearchArr.length;i++){
+      displaySearchedMovie(storedSearchArr[i]);
    };
+   
 };
 
+// Search for the movie with this function. 
+// This function will call the 'fetch' functions and initiate the search for finding the streaming services
+// Specifically, the getMovieId() function will be called. It will call the getMovieInfo() function
+// It will also add the searched movie into the currentSearchArr global array. This array is saved in the
+// local stroage (see the function saveSearchHistory).
+var searchFormHandler = function(event){
+   // stop the page from refreshing
+   event.preventDefault();
+   var movieTitleSearched = searchBar.value.trim(); //get the searched movie title
+   
+   if (movieTitleSearched){
+      // fetchData
+      displaySearchedMovie(movieTitleSearched);
+   } else {
+      // will be replaced with modal later 
+      alert("Please enter a city name")
+   }
+
+
+};
+
+
 loadSearchHistory();
+// adding the event listener and handler to search-form for searching movie by titles
+searchForm.addEventListener("submit", searchFormHandler); // calling the searchedFormHandler function when the form is submitted.
