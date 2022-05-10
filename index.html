@@ -5,18 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stream Searcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/style.css">
     <link rel="icon" href="./assets/images/popcorn icon.jpg">
 </head>
-<header id="header">
-    <h1>Stream Searcher</h1>
-</header>
+
 <body>
-    <input id="search-bar" placeholder="Enter title here"></imput><button id="btn">Search</button>
-    <div id="previous-searches"></div>
-    <div id="title-poster"></div>
-    <div id="imdb-section"></div>
-    <div id="streaming-services"></div>
+   <header class="hero is-primary">
+      <div class="hero-body">
+         <h1 class="title">
+            Stream Searcher
+         </h1>
+      </div>
+   </header>
+
+   <main class="columns">
+      <form class="control column is-one-third">
+         <label for="search-bar">Movie title</label>
+         <input class="input is-rounded" name="search-bar" id='search-bar' placeholder="Enter title here" type="text">
+         <button id="btn">Search</button>
+      </form>
+   
+       <div id="previous-searches"></div>
+       <div id="title-poster"></div>
+       <div id="imdb-section"></div>
+       <div id="streaming-services"></div>
+   </main>
+   
     <script src="./assets/script.js"></script>
 </body>
 </html>
