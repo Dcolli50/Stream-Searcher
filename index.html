@@ -27,7 +27,7 @@
       <!-- First Row -->
       <div class="columns section">
       <!-- Form for searching the movies -->
-         <form class="control column field box is-3">
+         <form id="search-form" class="control column field box is-3">
             
             <label class="label has-text-centered is-size-3" for="search-bar is-size-1">Movie title</label>
             <div class="control">
@@ -45,15 +45,14 @@
          
       </div>
       
-      <!-- Second Row with class list and IMDB info -->
+      <!-- Second Row with serach history and IMDB info -->
       
       <div class="section columns is-variable">
 
          <div class="column content is-3 box">
-            <ul id="previous-searches" class="list-of-searches">
-               <li class="list-item">Breaking Bad</li>
-               <li class="list-item">Ed Wood</li>
-               <li class="list-item">To kill a Mocking Bird</li>
+            <h3 class="is-size-3 has-text-centered">Search History</h3>
+            <ul id="previous-searches" class="previous-searches">
+               
             </ul>
          </div>
          
