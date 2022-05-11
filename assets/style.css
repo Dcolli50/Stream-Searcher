@@ -5,6 +5,7 @@ figure {
    border: 1px solid black;
 }
 
+
 /* Adding style to the previous search list. This is where the previous searches will populate. */
 .list-item{
    list-style-type: none;
