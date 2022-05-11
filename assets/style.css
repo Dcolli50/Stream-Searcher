@@ -1,4 +1,21 @@
 
-.title{
+
+/*utility style. This is so It is easier to find the space the poster is taking */
+figure {
+   border: 1px solid black;
+}
+
+/* Adding style to the previous search list. This is where the previous searches will populate. */
+.list-item{
+   list-style-type: none;
+   padding:.2rem;
    text-align: center;
+}
+
+/* If the searched movies names are hovered */
+.list-item:hover{
+   cursor: pointer;
+   color:white;
+   background-color: rgba(81, 81, 217, 0.868);
+   border: 1px solid white;
 }
