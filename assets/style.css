@@ -1,10 +1,15 @@
 
 
 /*utility style. This is so It is easier to find the space the poster is taking */
-figure {
+.media-container {
    border: 1px solid black;
 }
 
+/* Adding style when the trailer thumbnail is hovered */
+
+#trailer-display img:hover{
+   background-color: rgba(0,0,0);
+}
 
 /* Adding style to the previous search list. This is where the previous searches will populate. */
 .list-item{
@@ -20,3 +25,4 @@ figure {
    background-color: rgba(81, 81, 217, 0.868);
    border: 1px solid white;
 }
+

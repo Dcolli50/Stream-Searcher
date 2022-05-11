@@ -5,6 +5,7 @@ var searchForm = document.querySelector("#search-form");
 var searchBar = document.querySelector("#search-bar");
 var streamingServices = document.querySelector("#streaming-services");
 var posterDisplay = document.querySelector("#poster-display");
+var trailerDisplay = document.querySelector("#trailer-display");
 
 
 // Initializing necessary variables
@@ -67,22 +68,28 @@ var getMovieInfo = function(id){
    var streamServiceArr = [];
    var iconIds = [];
    var serviceLinks = [];
-   var apiUrl = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
+
+   var apiUrl = "https://api.watchmode.com/v1/title/" + id +"/details/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&append_to_response=sources";
+
+   // var apiUrl2 = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
 
    fetch(apiUrl).then(function(response){
       if(response.ok){
          response.json().then(function(data){
-            for(var i=0;i<data.length; i++){
-               if (!streamServiceArr.includes(data[i].name)){
-                  streamServiceArr.push(data[i].name);
-                  iconIds.push(data[i].source_id);
-                  serviceLinks.push(data[i].web_url);
+            for(var i=0;i<data.sources.length; i++){
+               if (!streamServiceArr.includes(data.sources[i].name)){
+                  streamServiceArr.push(data.sources[i].name);
+                  iconIds.push(data.sources[i].source_id);
+                  serviceLinks.push(data.sources[i].web_url);
                }
             };
+            streamServiceObj.trailerLink = data.trailer;
+            streamServiceObj.trialerThumbnail = data.trailer_thumbnail;
             streamServiceObj.serviceLinks = serviceLinks;
             streamServiceObj.serviceNames = streamServiceArr;
             streamServiceObj.iconsIds = iconIds;
             getIconUrls(streamServiceObj.iconsIds);
+            displayTrailer(streamServiceObj.trailerLink, streamServiceObj.trialerThumbnail);
          });
       } else {
          // this will be replace with modals later 
@@ -99,7 +106,18 @@ var displayPoster = function(posterUrl) {
    posterImgEl.setAttribute("src",posterUrl);
    posterImgEl.setAttribute("alt", "Movie Poster");
    posterDisplay.appendChild(posterImgEl);
-}
+};
+
+// display Mocie trailer
+var displayTrailer = function(trailerLink, trailerThumb){
+   trailerDisplay.textContent = '';
+   var anchoreEl = document.createElement("a");
+   anchoreEl.setAttribute("href", trailerLink);
+   var thumbnail = document.createElement("img");
+   thumbnail.setAttribute("src", trailerThumb);
+   anchoreEl.appendChild(thumbnail);
+   trailerDisplay.appendChild(anchoreEl);
+};
 
 
 // Get the WatchMode ID for the movie through this function
