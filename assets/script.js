@@ -11,9 +11,8 @@ var currentSearchArr = []; // Array to keep track of user searches.
 
 // display the streaming service icons
 var displayStreamingServices = function(iconUrlArr){
-
+   streamingServices.textContent = "";
    for (var i=0;i<iconUrlArr.length;i++){
-      console.log(iconUrlArr[i]);
       var serviceSpan = document.createElement("span");
       serviceSpan.className = "column";
       var iconImg = document.createElement("img");
