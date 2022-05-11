@@ -8,34 +8,42 @@ var streamingServices = document.querySelector("#streaming-services");
 
 // Initializing necessary variables
 var currentSearchArr = []; // Array to keep track of user searches.
+var streamServiceObj = {}; // Needed for later
 
 // display the streaming service icons
-var displayStreamingServices = function(iconUrlArr){
+var displayStreamingServices = function(iconUrlArr, serviceLinkArr){
+   console.log(streamServiceObj);
    streamingServices.textContent = "";
    for (var i=0;i<iconUrlArr.length;i++){
-      var serviceSpan = document.createElement("span");
-      serviceSpan.className = "column";
+      // create an anchore element for linkin the icons to the corresponding services
+      var serviceAnchore = document.createElement("a");
+      serviceAnchore.setAttribute("href", serviceLinkArr[i]);
+      serviceAnchore.setAttribute("target", "_blank");
+      serviceAnchore.className = "column";
+      // create an img element for the icons
       var iconImg = document.createElement("img");
       iconImg.setAttribute("src",iconUrlArr[i]);
 
-      serviceSpan.appendChild(iconImg);
+      serviceAnchore.appendChild(iconImg);
 
-      streamingServices.appendChild(serviceSpan);
+      streamingServices.appendChild(serviceAnchore);
    };
    
 };
 
 // get the URL for the streaming services icons.
 // There is a really nasty nested loop in here. We may have to optimize it later.
-// I think it is good for an MVP
+// I think it is good enough just for the MVP
 var getIconUrls = function(iconIdArr){
    var serviceIconUrl = [];
-   // use fetch to get the necessary source object
+   // use fetch to get the necessary source object containing link to the icons
    var apiUrl="https://api.watchmode.com/v1/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
    fetch(apiUrl).then(function(response){
       if(response.ok){
          response.json().then(function(data){
+            // iterate over the list of icon IDs
             for (var i=0;i<iconIdArr.length;i++){
+               // for every icon ID (currIconId) from previous loop, match that icons ID with the API Obj
                var currIconId = iconIdArr[i];
                for (var j=0;j<data.length;j++){
                   if (currIconId === data[j].id) {
@@ -43,21 +51,21 @@ var getIconUrls = function(iconIdArr){
                   };
                }
             }
-            displayStreamingServices(serviceIconUrl);
+            streamServiceObj.iconsUrl = serviceIconUrl;
+            displayStreamingServices(streamServiceObj.iconsUrl, streamServiceObj.serviceLinks);
          });
       } else {
          alert("Could not get the stream service information!")
       }
    });
-   
 };
 
-// Get the information for movie (Streaming service, release date etc) using the previously obtained ID from GetMovieID function.
+// Get the information for movie (Streaming service) using the previously obtained ID from GetMovieID function.
 var getMovieInfo = function(id){ 
    // initialize an array to hold all the streaming services
    var streamServiceArr = [];
    var iconIds = [];
-   var streamServiceObj = {};
+   var serviceLinks = [];
    var apiUrl = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
 
    fetch(apiUrl).then(function(response){
@@ -67,28 +75,41 @@ var getMovieInfo = function(id){
                if (!streamServiceArr.includes(data[i].name)){
                   streamServiceArr.push(data[i].name);
                   iconIds.push(data[i].source_id);
+                  serviceLinks.push(data[i].web_url);
                }
             };
-            getIconUrls(iconIds);
+            streamServiceObj.serviceLinks = serviceLinks;
+            streamServiceObj.serviceNames = streamServiceArr;
+            streamServiceObj.iconsIds = iconIds;
+            getIconUrls(streamServiceObj.iconsIds);
          });
       } else {
          // this will be replace with modals later 
          alert("Streaming Source not Found!");
       }
-   })
+   });
+   
 };
+
+
+
 
 // Get the WatchMode ID for the movie through this function
 var getMovieId = function(movieName){
-   var apiUrl = "https://api.watchmode.com/v1/search/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&search_field=name&search_value=" + movieName;
+   var apiUrl = 
+   "https://api.watchmode.com/v1/autocomplete-search/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&search_value=" + movieName +"&search_type=2";
+
+   // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&search_field=name&search_value=" + movieName;
 
    fetch(apiUrl).then(function(response){
       // check if the response is ok
       if(response.ok){
          response.json().then(function(data){
             // if there are multiple titles containing the movie name. Use a loop to show it all.
-            console.log(data.title_results[0].id);
-            var movieId =  data.title_results[0].id;
+            console.log(data.results[0].id);
+            var movieId = data.results[0].id;
+            var poster = data.results[0].image_url;
+            displayPoster(poster);
             getMovieInfo(movieId);
             
          });
