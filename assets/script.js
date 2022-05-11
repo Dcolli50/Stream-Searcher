@@ -3,16 +3,61 @@
 var previousSearches = document.querySelector("#previous-searches");
 var searchForm = document.querySelector("#search-form");
 var searchBar = document.querySelector("#search-bar");
+var streamingServices = document.querySelector("#streaming-services");
 
 
 // Initializing necessary variables
 var currentSearchArr = []; // Array to keep track of user searches.
 
+// display the streaming service icons
+var displayStreamingServices = function(iconUrlArr){
+   streamingServices.textContent = "";
+   for (var i=0;i<iconUrlArr.length;i++){
+      var serviceSpan = document.createElement("span");
+      serviceSpan.className = "column";
+      var iconImg = document.createElement("img");
+      iconImg.setAttribute("src",iconUrlArr[i]);
+
+      serviceSpan.appendChild(iconImg);
+
+      streamingServices.appendChild(serviceSpan);
+   };
+   
+};
+
+// get the URL for the streaming services icons.
+// There is a really nasty nested loop in here. We may have to optimize it later.
+// I think it is good for an MVP
+var getIconUrls = function(iconIdArr){
+   var serviceIconUrl = [];
+   // use fetch to get the necessary source object
+   var apiUrl="https://api.watchmode.com/v1/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
+   fetch(apiUrl).then(function(response){
+      if(response.ok){
+         response.json().then(function(data){
+            for (var i=0;i<iconIdArr.length;i++){
+               var currIconId = iconIdArr[i];
+               for (var j=0;j<data.length;j++){
+                  if (currIconId === data[j].id) {
+                     serviceIconUrl.push(data[j].logo_100px);
+                  };
+               }
+            }
+            displayStreamingServices(serviceIconUrl);
+         });
+      } else {
+         alert("Could not get the stream service information!")
+      }
+   });
+   
+};
 
 // Get the information for movie (Streaming service, release date etc) using the previously obtained ID from GetMovieID function.
 var getMovieInfo = function(id){ 
    // initialize an array to hold all the streaming services
    var streamServiceArr = [];
+   var iconIds = [];
+   var streamServiceObj = {};
    var apiUrl = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
 
    fetch(apiUrl).then(function(response){
@@ -21,18 +66,19 @@ var getMovieInfo = function(id){
             for(var i=0;i<data.length; i++){
                if (!streamServiceArr.includes(data[i].name)){
                   streamServiceArr.push(data[i].name);
+                  iconIds.push(data[i].source_id);
                }
             };
+            getIconUrls(iconIds);
          });
       } else {
          // this will be replace with modals later 
          alert("Streaming Source not Found!");
       }
    })
-   console.log(streamServiceArr);
 };
 
-// Get the WathMode ID for the movie through this function
+// Get the WatchMode ID for the movie through this function
 var getMovieId = function(movieName){
    var apiUrl = "https://api.watchmode.com/v1/search/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&search_field=name&search_value=" + movieName;
 
@@ -87,9 +133,9 @@ var loadSearchHistory = function(){
    // if no previous data is saved in the local storage, just initialize an emtpy list for current searches.
    if (!storedSearchArr) {
       storedSearchArr = [];
-      console.log("nothing")
+      
    }
-   console.log(storedSearchArr);
+   
    // append all the movie names stored in the list through a for loop
    for (var i=0;i<storedSearchArr.length;i++){
       displaySearchedMovie(storedSearchArr[i]);
@@ -108,7 +154,7 @@ var searchFormHandler = function(event){
    var movieTitleSearched = searchBar.value.trim(); //get the searched movie title
    
    if (movieTitleSearched){
-      // fetchData
+      getMovieId(movieTitleSearched);
       displaySearchedMovie(movieTitleSearched);
    } else {
       // will be replaced with modal later 
