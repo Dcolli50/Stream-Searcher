@@ -4,6 +4,7 @@ var previousSearches = document.querySelector("#previous-searches");
 var searchForm = document.querySelector("#search-form");
 var searchBar = document.querySelector("#search-bar");
 var streamingServices = document.querySelector("#streaming-services");
+var posterDisplay = document.querySelector("#poster-display");
 
 
 // Initializing necessary variables
@@ -91,7 +92,14 @@ var getMovieInfo = function(id){
    
 };
 
-
+// display Movie poster
+var displayPoster = function(posterUrl) {
+   posterDisplay.textContent = "";
+   var posterImgEl = document.createElement("img");
+   posterImgEl.setAttribute("src",posterUrl);
+   posterImgEl.setAttribute("alt", "Movie Poster");
+   posterDisplay.appendChild(posterImgEl);
+}
 
 
 // Get the WatchMode ID for the movie through this function
