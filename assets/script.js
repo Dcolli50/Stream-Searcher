@@ -193,7 +193,16 @@ var searchFormHandler = function(event){
 
 };
 
+// The function that displays movie info if their names are clicked in the Search History
+var previousSearchClickHandler = function(event){
+   var clickedElName = event.target.textContent;
+   getMovieId(clickedElName);
+}
 
 loadSearchHistory();
 // adding the event listener and handler to search-form for searching movie by titles
 searchForm.addEventListener("submit", searchFormHandler); // calling the searchedFormHandler function when the form is submitted.
+
+// adding then event listener and handler for search history section. Clicking on the movie names will display
+// the information about the movie.
+previousSearches.addEventListener("click", previousSearchClickHandler);
