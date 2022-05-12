@@ -209,7 +209,11 @@ var searchFormHandler = function(event){
    
    if (movieTitleSearched){
       getMovieId(movieTitleSearched);
-      displaySearchedMovie(movieTitleSearched);
+      // display the movie name in the search history if it doesn't exist already
+      // use conditionals
+      if (!currentSearchArr.includes(movieTitleSearched)){
+         displaySearchedMovie(movieTitleSearched);
+      }
    } else {
       // will be replaced with modal later 
       alert("Please enter a city name")
