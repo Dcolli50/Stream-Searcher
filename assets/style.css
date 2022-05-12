@@ -44,7 +44,11 @@
    padding:.2rem;
    text-align: center;
 }
+/* position the clear button at the bottom of search history */
 
+.clearBtn-container{
+   padding-top:1rem;
+}
 /* If the searched movies names are hovered */
 .list-item:hover{
    cursor: pointer;

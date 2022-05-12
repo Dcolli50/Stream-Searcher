@@ -7,9 +7,16 @@ var streamingServices = document.querySelector("#streaming-services");
 var posterDisplay = document.querySelector("#poster-display");
 var trailerDisplay = document.querySelector("#trailer-display");
 var playIcon = document.querySelector("#play-icon");
+var clearBtn = document.querySelector("#clear-btn")
 
+// function for toggling the play button. It kicks in everytime a trailer is displayed. See displayTrailer() function
 var playIconToggle = function(){
    playIcon.classList.toggle("display-toggle-block", "display-toggle-none");
+};
+
+// function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
+var clearBtnToggle = function(){
+   clearBtn.classList.toggle("display-toggle-block", "display-toggle-none");
 };
 
 
@@ -157,8 +164,10 @@ var getMovieId = function(movieName){
 // When a movie name is searched by the user
 // When movie search history is loaded from localStorage (See: loadSearchHistory function)
 var displaySearchedMovie = function(movieName){
+      clearBtnToggle();
       var movieNameItem = document.createElement("li");
       movieNameItem.classList = "list-item box";
+      movieName = movieName.toUpperCase();
       movieNameItem.textContent = movieName;
       // Add the name to the currentSearchArr
       currentSearchArr.push(movieName);
@@ -228,10 +237,25 @@ var previousSearchClickHandler = function(event){
    getMovieId(clickedElName);
 }
 
+// function that clears the search history and the current displayed movie information
+var clear = function(event){
+   if (event.target.textContent === "Clear History"){
+   // update the currentSearchArr
+   currentSearchArr = [];
+   saveSearchHistory(currentSearchArr);
+   // refresh the page
+   window.location.reload();
+   }
+   
+};
+
 loadSearchHistory();
 // adding the event listener and handler to search-form for searching movie by titles
 searchForm.addEventListener("submit", searchFormHandler); // calling the searchedFormHandler function when the form is submitted.
 
-// adding then event listener and handler for search history section. Clicking on the movie names will display
+// adding the event listener and handler for search history section. Clicking on the movie names will display
 // the information about the movie.
 previousSearches.addEventListener("click", previousSearchClickHandler);
+
+// adding the event listener and handler for the clear button. It will call the clear function
+clearBtn.addEventListener("click", clear);
