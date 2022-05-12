@@ -11,6 +11,33 @@
    background-color: rgba(0,0,0);
 }
 
+/* Trailer icon styles */
+.trailer-container{
+ position:relative;
+}
+
+.trailer-icon{
+   position:absolute;
+   top: calc(50% - 50px);
+   left: calc(50% - 50px);
+   z-index:999;
+}
+
+#play-icon{
+   width:100px;
+}
+
+/* toggling the display for play icon */
+.display-toggle-none{
+   display: none;
+}
+
+.display-toggle-block{
+   display: block;
+}
+/* trailer style end */
+
+
 /* Adding style to the previous search list. This is where the previous searches will populate. */
 .list-item{
    list-style-type: none;

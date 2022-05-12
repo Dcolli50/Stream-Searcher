@@ -6,6 +6,11 @@ var searchBar = document.querySelector("#search-bar");
 var streamingServices = document.querySelector("#streaming-services");
 var posterDisplay = document.querySelector("#poster-display");
 var trailerDisplay = document.querySelector("#trailer-display");
+var playIcon = document.querySelector("#play-icon");
+
+var playIconToggle = function(){
+   playIcon.classList.toggle("display-toggle-block", "display-toggle-none");
+};
 
 
 // Initializing necessary variables
@@ -112,11 +117,13 @@ var displayPoster = function(posterUrl) {
 var displayTrailer = function(trailerLink, trailerThumb){
    trailerDisplay.textContent = '';
    var anchoreEl = document.createElement("a");
+   anchoreEl.setAttribute("target","_blank");
    anchoreEl.setAttribute("href", trailerLink);
    var thumbnail = document.createElement("img");
    thumbnail.setAttribute("src", trailerThumb);
    anchoreEl.appendChild(thumbnail);
    trailerDisplay.appendChild(anchoreEl);
+   playIconToggle();
 };
 
 
