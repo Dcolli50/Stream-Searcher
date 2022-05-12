@@ -16,7 +16,7 @@ var displayStreamingServices = function(iconUrlArr, serviceLinkArr){
    console.log(streamServiceObj);
    streamingServices.textContent = "";
    for (var i=0;i<iconUrlArr.length;i++){
-      // create an anchore element for linkin the icons to the corresponding services
+      // create an anchor element for linkin the icons to the corresponding services
       var serviceAnchore = document.createElement("a");
       serviceAnchore.setAttribute("href", serviceLinkArr[i]);
       serviceAnchore.setAttribute("target", "_blank");
@@ -146,8 +146,8 @@ var displaySearchedMovie = function(movieName){
 
 
 // This function will take the currentSearchArr and save it in the local storage.
-// We will call this function everytime the currentSearchArr updates. In other words:
-// Everytime the user makes a search using the form.
+// We will call this function every time the currentSearchArr updates. In other words:
+// Every time the user makes a search using the form.
 
 var saveSearchHistory = function(currentSearchArr){
    localStorage.setItem("Current-Searches", JSON.stringify(currentSearchArr));
@@ -176,7 +176,7 @@ var loadSearchHistory = function(){
 // This function will call the 'fetch' functions and initiate the search for finding the streaming services
 // Specifically, the getMovieId() function will be called. It will call the getMovieInfo() function
 // It will also add the searched movie into the currentSearchArr global array. This array is saved in the
-// local stroage (see the function saveSearchHistory).
+// local storage (see the function saveSearchHistory).
 var searchFormHandler = function(event){
    // stop the page from refreshing
    event.preventDefault();
@@ -187,7 +187,7 @@ var searchFormHandler = function(event){
       displaySearchedMovie(movieTitleSearched);
    } else {
       // will be replaced with modal later 
-      alert("Please enter a city name")
+      alert("Please enter a title")
    }
 
 
