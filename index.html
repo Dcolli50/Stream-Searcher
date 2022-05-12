@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stream Searcher</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/style.css">
-    <link rel="icon" href="./assets/images/popcorn icon.jpg">
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Stream Searcher</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+   <link rel="stylesheet" href="./assets/style.css">
+   <link rel="icon" href="./assets/images/popcorn icon.jpg">
 </head>
 
 <body>
@@ -26,48 +27,59 @@
 
       <!-- First Row -->
       <div class="columns section" id="search-form-container">
-      <!-- Form for searching the movies -->
+         <!-- Form for searching the movies -->
          <form id="search-form" class="control column field box is-3">
-            
+
             <label class="label has-text-centered is-size-3" for="search-bar is-size-1">Movie title</label>
             <div class="control">
-               <input class="input is-rounded" name="search-bar" id='search-bar' placeholder="Enter title here" type="text">
+               <input class="input is-rounded" name="search-bar" id='search-bar' placeholder="Enter title here"
+                  type="text">
 
                <button id="btn" class="mt-5  button is-rounded is-primary is-hovered">Search</button>
             </div>
-            
+
          </form>
 
          <!-- Movies poster and title area. Poster of the chosen movie will be displayed here. Content will be dynamically genertad through user interaction. -->
          <figure class="column is-9 section" id="poster-display">
 
          </figure>
-         
+
       </div>
-      
+
       <!-- Second Row with serach history and IMDB info -->
-      
+
       <div class="section columns is-variable">
 
          <div class="column content is-3 box">
             <h3 class="is-size-3 has-text-centered">Search History</h3>
             <ul id="previous-searches" class="previous-searches">
-               
+
             </ul>
          </div>
-         
+
       </div>
 
-       <div id="title-poster"></div>
-       <div id="imdb-section"></div>
+      <div id="title-poster"></div>
+      <div id="imdb-section"></div>
 
-       <!-- Streaming service container -->
-       <div class="section">
-          <div class="columns" id="streaming-services">
+      <!-- Streaming service container -->
+      <div class="section">
+         <div class="columns" id="streaming-services">
 
-          </div>
-       </div>
+         </div>
+      </div>
    </main>
+   <!-- The Modal -->
+   <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+         <span class="close">&times;</span>
+         <p id="modal-text">test</p>
+      </div>
+   </div>
    <script src="./assets/script.js"></script>
 </body>
+
 </html>

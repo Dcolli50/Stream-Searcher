@@ -5,6 +5,8 @@ var searchForm = document.querySelector("#search-form");
 var searchBar = document.querySelector("#search-bar");
 var streamingServices = document.querySelector("#streaming-services");
 var posterDisplay = document.querySelector("#poster-display");
+var modal = document.getElementById("#myModal");
+var modalText = document.getElementById("#modal-text");
 
 
 // Initializing necessary variables
@@ -185,15 +187,28 @@ var searchFormHandler = function(event){
    if (movieTitleSearched){
       getMovieId(movieTitleSearched);
       displaySearchedMovie(movieTitleSearched);
-   } else {
+   } else function showModal() {
       // will be replaced with modal later 
-      alert("Please enter a title")
+      // alert("Please enter a title");
+//----------START MODAL SECTION----------//
+      modal.style.display = "block";
+      //user can close the modal by clicking the (x) or clicking outside of the modal
+      span.onclick = function() {
+         modal.style.display = "none";
+       }
+       window.onclick = function(event) {
+         if (event.target == modal) {
+           modal.style.display = "none";
+         }
+       }
+       
+      showModal();
+//-----------END MODAL SECTION-----------//
    }
-
 
 };
 
 
 loadSearchHistory();
 // adding the event listener and handler to search-form for searching movie by titles
-searchForm.addEventListener("submit", searchFormHandler); // calling the searchedFormHandler function when the form is submitted.
+searchForm.addEventListener("submit", searchFormHandler); // calling the searchedFormHandler function when the form is submitted
