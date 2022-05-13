@@ -1,3 +1,4 @@
+/* main background */
 
 
 /*utility style. This is so It is easier to find the space the poster is taking */
@@ -7,8 +8,9 @@
 
 /* Adding style when the trailer thumbnail is hovered */
 
-#trailer-display img:hover{
-   background-color: rgba(0,0,0);
+/* need to work this style below */
+#trailer-display a:hover + .trailer-text{
+   color: rgb(0,0,0);
 }
 
 /* Trailer icon styles */
@@ -21,6 +23,12 @@
    top: calc(50% - 50px);
    left: calc(50% - 50px);
    z-index:999;
+}
+
+.trailer-text{
+   background-color: rgba(255,255,255,0.4);
+   border-radius: 5px;
+   padding:.5rem;
 }
 
 #play-icon{

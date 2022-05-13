@@ -240,7 +240,6 @@ var previousSearchClickHandler = function(event){
 // function that clears the search history and the current displayed movie information
 var clear = function(event){
    if (event.target.textContent === "Clear History"){
-      console.log("worked");
       // update the currentSearchArr
       currentSearchArr = [];
       saveSearchHistory(currentSearchArr);
