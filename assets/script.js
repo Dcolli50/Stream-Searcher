@@ -51,7 +51,7 @@ var displayStreamingServices = function(iconUrlArr, serviceLinkArr){
 var getIconUrls = function(iconIdArr){
    var serviceIconUrl = [];
    // use fetch to get the necessary source object containing link to the icons
-   var apiUrl="https://api.watchmode.com/v1/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
+   var apiUrl="https://api.watchmode.com/v1/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
    fetch(apiUrl).then(function(response){
       if(response.ok){
          response.json().then(function(data){
@@ -81,9 +81,9 @@ var getMovieInfo = function(id){
    var iconIds = [];
    var serviceLinks = [];
 
-   var apiUrl = "https://api.watchmode.com/v1/title/" + id +"/details/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&append_to_response=sources";
+   var apiUrl = "https://api.watchmode.com/v1/title/" + id +"/details/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&append_to_response=sources";
 
-   // var apiUrl2 = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
+   // var apiUrl2 = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
 
    fetch(apiUrl).then(function(response){
       if(response.ok){
@@ -131,15 +131,22 @@ var displayTrailer = function(trailerLink, trailerThumb){
    anchoreEl.appendChild(thumbnail);
    trailerDisplay.appendChild(anchoreEl);
    playIconToggle();
+
+   // trailerDisplay.textContent = '';
+   // var anchoreEl = document.createElement("iframe");
+   // anchoreEl.setAttribute("framborder", '0');
+   // trailerLink = trailerLink.replace("watch?v=", "embed/");
+   // anchoreEl.setAttribute("src", trailerLink);
+   // trailerDisplay.appendChild(anchoreEl);
 };
 
 
 // Get the WatchMode ID for the movie through this function
 var getMovieId = function(movieName){
    var apiUrl = 
-   "https://api.watchmode.com/v1/autocomplete-search/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&search_value=" + movieName +"&search_type=2";
+   "https://api.watchmode.com/v1/autocomplete-search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_value=" + movieName +"&search_type=2";
 
-   // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&search_field=name&search_value=" + movieName;
+   // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_field=name&search_value=" + movieName;
 
    fetch(apiUrl).then(function(response){
       // check if the response is ok
