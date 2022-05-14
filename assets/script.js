@@ -220,11 +220,12 @@ var searchFormHandler = function(event){
       getMovieId(movieTitleSearched);
       // display the movie name in the search history if it doesn't exist already
       // use conditionals
-      console.log("Current Array: "+ currentSearchArr)
-      if (!currentSearchArr.includes(movieTitleSearched)){
-         console.log(movieTitleSearched + " WAS NOT IN HERE")
+      
+      if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())){
+         
          displaySearchedMovie(movieTitleSearched);
-      }
+       
+      };
    } else {
       // will be replaced with modal later 
       alert("Please enter a movie name")
@@ -237,7 +238,7 @@ var searchFormHandler = function(event){
 var previousSearchClickHandler = function(event){
    var clickedElName = event.target.textContent;
    getMovieId(clickedElName);
-}
+};
 
 // function that clears the search history and the current displayed movie information
 var clear = function(event){
