@@ -220,9 +220,12 @@ var searchFormHandler = function(event){
       getMovieId(movieTitleSearched);
       // display the movie name in the search history if it doesn't exist already
       // use conditionals
-      if (!currentSearchArr.includes(movieTitleSearched)){
+      
+      if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())){
+         
          displaySearchedMovie(movieTitleSearched);
-      }
+       
+      };
    } else {
       // will be replaced with modal later 
       alert("Please enter a city name")
@@ -235,17 +238,17 @@ var searchFormHandler = function(event){
 var previousSearchClickHandler = function(event){
    var clickedElName = event.target.textContent;
    getMovieId(clickedElName);
-}
+};
 
 // function that clears the search history and the current displayed movie information
 var clear = function(event){
    if (event.target.textContent === "Clear History"){
-   // update the currentSearchArr
-   currentSearchArr = [];
-   saveSearchHistory(currentSearchArr);
-   // refresh the page
-   window.location.reload();
-   }
+      // update the currentSearchArr
+      currentSearchArr = [];
+      saveSearchHistory(currentSearchArr);
+      // refresh the page
+      window.location.reload();
+   };
    
 };
 
