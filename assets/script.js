@@ -122,22 +122,22 @@ var displayPoster = function(posterUrl) {
 
 // display Mocie trailer
 var displayTrailer = function(trailerLink, trailerThumb){
-   trailerDisplay.textContent = '';
-   var anchoreEl = document.createElement("a");
-   anchoreEl.setAttribute("target","_blank");
-   anchoreEl.setAttribute("href", trailerLink);
-   var thumbnail = document.createElement("img");
-   thumbnail.setAttribute("src", trailerThumb);
-   anchoreEl.appendChild(thumbnail);
-   trailerDisplay.appendChild(anchoreEl);
-   playIconToggle();
-
    // trailerDisplay.textContent = '';
-   // var anchoreEl = document.createElement("iframe");
-   // anchoreEl.setAttribute("framborder", '0');
-   // trailerLink = trailerLink.replace("watch?v=", "embed/");
-   // anchoreEl.setAttribute("src", trailerLink);
+   // var anchoreEl = document.createElement("a");
+   // anchoreEl.setAttribute("target","_blank");
+   // anchoreEl.setAttribute("href", trailerLink);
+   // var thumbnail = document.createElement("img");
+   // thumbnail.setAttribute("src", trailerThumb);
+   // anchoreEl.appendChild(thumbnail);
    // trailerDisplay.appendChild(anchoreEl);
+   // playIconToggle();
+
+   trailerDisplay.textContent = '';
+   var anchoreEl = document.createElement("iframe");
+   anchoreEl.setAttribute("framborder", '0');
+   trailerLink = trailerLink.replace("watch?v=", "embed/");
+   anchoreEl.setAttribute("src", trailerLink);
+   trailerDisplay.appendChild(anchoreEl);
 };
 
 
