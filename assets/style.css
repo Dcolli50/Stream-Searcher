@@ -66,3 +66,8 @@ iframe{
    border: 1px solid white;
 }
 
+/* movie information styling */
+#general-movie-info > li{
+   border-bottom: 1px solid black;
+   font-weight:500;
+}

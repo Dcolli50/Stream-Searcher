@@ -39,10 +39,28 @@
          </form>
 
          <!-- Movies poster and title area. Poster of the chosen movie will be displayed here. Content will be dynamically genertad through user interaction. -->
-         <div  class="media-container column is-9 section is-flex">
-            <figure class="mx-3" id="poster-display">
+         
+         <div  class="media-container column is-9 section is-flex card">
+            <!-- Movie image part -->
+            <div class="card-image">
+               <figure class="ml-3 image" id="poster-display">
 
-            </figure>
+               </figure>
+            </div>
+            <!-- movie information -->
+            <div id="movie-info">
+               <!-- movie title name (header) -->
+               <header class="card-header">
+                  <p  id="movie-title"></p>
+               </header>
+               <!-- other info (genre, release date, type etc) -->
+               <div class="card-content">
+                  <ul class="content" id="general-movie-info">
+                  
+                  </ul>
+               </div>
+
+            </div>
 
          </div>
       </div>
