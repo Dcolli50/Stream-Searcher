@@ -121,7 +121,7 @@ var displayPoster = function(posterUrl) {
    posterDisplay.appendChild(posterImgEl);
 };
 
-// display Mocie trailer
+// display Movie trailer
 var displayTrailer = function(obj){
    trailerDisplay.textContent = '';
 
@@ -158,11 +158,22 @@ var displayTrailer = function(obj){
    playIconToggle();
 
    // trailerDisplay.textContent = '';
-   // var anchoreEl = document.createElement("iframe");
-   // anchoreEl.setAttribute("framborder", '0');
-   // trailerLink = trailerLink.replace("watch?v=", "embed/");
-   // anchoreEl.setAttribute("src", trailerLink);
+   // var anchoreEl = document.createElement("a");
+   // anchoreEl.setAttribute("target","_blank");
+   // anchoreEl.setAttribute("href", trailerLink);
+   // var thumbnail = document.createElement("img");
+   // thumbnail.setAttribute("src", trailerThumb);
+   // anchoreEl.appendChild(thumbnail);
    // trailerDisplay.appendChild(anchoreEl);
+
+   // playIconToggle();
+
+   trailerDisplay.textContent = '';
+   var anchoreEl = document.createElement("iframe");
+   anchoreEl.setAttribute("framborder", '0');
+   trailerLink = trailerLink.replace("watch?v=", "embed/");
+   anchoreEl.setAttribute("src", trailerLink);
+   trailerDisplay.appendChild(anchoreEl);
 
 };
 
