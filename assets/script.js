@@ -95,13 +95,14 @@ var getMovieInfo = function(id){
                   serviceLinks.push(data.sources[i].web_url);
                }
             };
+            streamServiceObj.title = data.title;
             streamServiceObj.trailerLink = data.trailer;
-            streamServiceObj.trialerThumbnail = data.trailer_thumbnail;
+            streamServiceObj.trailerThumbnail = data.trailer_thumbnail;
             streamServiceObj.serviceLinks = serviceLinks;
             streamServiceObj.serviceNames = streamServiceArr;
             streamServiceObj.iconsIds = iconIds;
             getIconUrls(streamServiceObj.iconsIds);
-            displayTrailer(streamServiceObj.trailerLink, streamServiceObj.trialerThumbnail);
+            displayTrailer(streamServiceObj);
          });
       } else {
          // this will be replace with modals later 
@@ -120,8 +121,42 @@ var displayPoster = function(posterUrl) {
    posterDisplay.appendChild(posterImgEl);
 };
 
-// display Mocie trailer
-var displayTrailer = function(trailerLink, trailerThumb){
+// display Movie trailer
+var displayTrailer = function(obj){
+   trailerDisplay.textContent = '';
+
+
+   if (!obj.trailerLink){
+      var anchoreEl = document.createElement("a");
+      anchoreEl.setAttribute("target","_blank");
+      anchoreEl.setAttribute("href", 'https://www.youtube.com/results?search_query='+obj.title + ' trailer');
+      var badThumbnail = document.createElement("img");
+      badThumbnail.setAttribute("src", "./assets/images/error.jpg");
+      badThumbnail.setAttribute("title", "No Trailer found. Click here to search on YouTube!");
+      anchoreEl.appendChild(badThumbnail);
+      trailerDisplay.appendChild(anchoreEl);
+      playIconToggle();
+   } else {
+      var anchoreEl = document.createElement("a");
+      anchoreEl.setAttribute("target","_blank");
+      anchoreEl.setAttribute("href", obj.trailerLink);
+      var thumbnail = document.createElement("img");
+      thumbnail.setAttribute("src", obj.trailerThumbnail);
+      anchoreEl.appendChild(thumbnail);
+      trailerDisplay.appendChild(anchoreEl);
+      playIconToggle();
+   }
+   
+
+   var anchoreEl = document.createElement("a");
+   anchoreEl.setAttribute("target","_blank");
+   anchoreEl.setAttribute("href", trailerLink);
+   var thumbnail = document.createElement("img");
+   thumbnail.setAttribute("src", trailerThumb);
+   anchoreEl.appendChild(thumbnail);
+   trailerDisplay.appendChild(anchoreEl);
+   playIconToggle();
+
    // trailerDisplay.textContent = '';
    // var anchoreEl = document.createElement("a");
    // anchoreEl.setAttribute("target","_blank");
@@ -130,6 +165,7 @@ var displayTrailer = function(trailerLink, trailerThumb){
    // thumbnail.setAttribute("src", trailerThumb);
    // anchoreEl.appendChild(thumbnail);
    // trailerDisplay.appendChild(anchoreEl);
+
    // playIconToggle();
 
    trailerDisplay.textContent = '';
@@ -138,6 +174,7 @@ var displayTrailer = function(trailerLink, trailerThumb){
    trailerLink = trailerLink.replace("watch?v=", "embed/");
    anchoreEl.setAttribute("src", trailerLink);
    trailerDisplay.appendChild(anchoreEl);
+
 };
 
 
