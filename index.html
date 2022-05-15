@@ -12,7 +12,7 @@
 
 <body>
    <!-- Title of the Web Page / Header -->
-   <header class="hero is-primary mb-5">
+   <header class="hero is-primary">
       <div class="hero-body has-text-centered">
          <h1 class="title is-size-1">
             Stream Searcher
@@ -30,7 +30,7 @@
          <form id="search-form" class="control column field box is-3">
             
             <label class="label has-text-centered is-size-3" for="search-bar is-size-1">Movie title</label>
-            <div class="control">
+            <div class="control has-text-centered">
                <input class="input is-rounded" name="search-bar" id='search-bar' placeholder="Enter title here" type="text">
 
                <button id="btn" class="mt-5  button is-rounded is-primary is-hovered">Search</button>
@@ -39,27 +39,44 @@
          </form>
 
          <!-- Movies poster and title area. Poster of the chosen movie will be displayed here. Content will be dynamically genertad through user interaction. -->
-         <figure class="column is-9 section" id="poster-display">
+         <div  class="media-container column is-9 section is-flex">
+            <figure class="mx-3" id="poster-display">
 
-         </figure>
-         
+            </figure>
+
+         </div>
       </div>
       
       <!-- Second Row with serach history and IMDB info -->
       
       <div class="section columns is-variable">
-
-         <div class="column content is-3 box">
-            <h3 class="is-size-3 has-text-centered">Search History</h3>
+         <!-- search history -->
+         <div class="column is-3 box has-text-centered">
+            <h3 class="is-size-3">Search History</h3>
             <ul id="previous-searches" class="previous-searches">
                
             </ul>
+            <!-- The clear button to clear the search history -->
+            <div class="has-text-centered clearBtn-container display-toggle-none" id="clear-btn">
+               <button class="button is-rounded is-primary is-hovered">Clear History</button>
+            </div>
+         </div>
+
+         <!-- movie trailer -->
+         <div class="column is-9 has-text-centered trailer-container">
+
+            <!-- Play Icon -->
+            <figure class="inline-block trailer-icon">
+               <img src="./assets/images/play-icon.png" alt="play-icon" id="play-icon" class="display-toggle-none">
+               <!-- <div class="is-size-3 has-text-weight-bold trailer-text">Watch Trailer</div> -->
+            </figure>
+            <div class="mx-3" id ='trailer-display'>
+               
+            </div>
          </div>
          
       </div>
 
-       <div id="title-poster"></div>
-       <div id="imdb-section"></div>
 
        <!-- Streaming service container -->
        <div class="section">
