@@ -11,6 +11,10 @@ var clearBtn = document.querySelector("#clear-btn")
 var movieInfo = document.getElementById("movie-info");
 var movieTitle = document.getElementById("movie-title");
 var GenMovieInfo = document.getElementById("general-movie-info");
+var slideInBtn = document.querySelector(".slidein");
+var plot = document.querySelector(".plot-overview");
+
+
 
 // function for toggling the play button. It kicks in everytime a trailer is displayed. See displayTrailer() function
 var playIconToggle = function(){
@@ -114,8 +118,12 @@ var displayMovieInfo = function(obj){
 
    GenMovieInfo.appendChild(ratingEl);
    GenMovieInfo.appendChild(scoreEl);
+   
+   // make the slidein button appear
+   slideInBtn.style.display = 'block';
 
 };
+
 
 // Get the information for movie (Streaming service) using the previously obtained ID from GetMovieID function.
 var getMovieInfo = function(id){ 
@@ -146,6 +154,8 @@ var getMovieInfo = function(id){
             streamServiceObj.genreArr = data.genre_names;
             streamServiceObj.rating = data.user_rating;
             streamServiceObj.score = data.critic_score;
+            // add movie plot 
+            streamServiceObj.plot = data.plot_overview;
             // add trailer info
             streamServiceObj.trailerLink = data.trailer;
             streamServiceObj.trialerThumbnail = data.trailer_thumbnail;
@@ -315,7 +325,24 @@ var clear = function(event){
    
 };
 
+// function for showing the plot overview
+var showPlotOverview = function(obj){
+   if (plot.style.display === 'block'){
+      plot.style.display = 'none';
+   } else {
+      plot.style.display = 'block';
+      plot.textContent = "";
+   }
+   var plotText = document.createElement("p");
+   plotText.textContent = obj.plot;
+   plot.appendChild(plotText);
+};
+
 loadSearchHistory();
+// adding the event listern and handler for showing plot overview for the movies
+slideInBtn.addEventListener("click", function(){
+   showPlotOverview(streamServiceObj);
+});
 // adding the event listener and handler to search-form for searching movie by titles
 searchForm.addEventListener("submit", searchFormHandler); // calling the searchedFormHandler function when the form is submitted.
 

@@ -71,3 +71,32 @@ iframe{
    border-bottom: 1px solid black;
    font-weight:500;
 }
+
+/* styling slide in buttion for the movie plot overview */
+
+
+.slidein{
+   display:none;
+}
+
+.plot-overview{
+   text-align: center;
+   display: none;
+   width:40%;
+   height:100%;
+   overflow: hidden;
+}
+
+
+
+
+.slidein-button{
+   height:100%;
+   padding-left: 0;
+   padding-right: 0.1rem;
+}
+
+.button-content{
+   writing-mode: vertical-lr;
+}
+
