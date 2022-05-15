@@ -9,8 +9,9 @@
 /* Adding style when the trailer thumbnail is hovered */
 
 /* need to work this style below */
-#trailer-display a:hover + .trailer-text{
-   color: rgb(0,0,0);
+iframe{
+  width:600px;
+  height:355px;
 }
 
 /* Trailer icon styles */

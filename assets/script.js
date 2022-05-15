@@ -125,6 +125,7 @@ var displayPoster = function(posterUrl) {
 var displayTrailer = function(obj){
    trailerDisplay.textContent = '';
 
+
    if (!obj.trailerLink){
       var anchoreEl = document.createElement("a");
       anchoreEl.setAttribute("target","_blank");
@@ -146,6 +147,23 @@ var displayTrailer = function(obj){
       playIconToggle();
    }
    
+
+   var anchoreEl = document.createElement("a");
+   anchoreEl.setAttribute("target","_blank");
+   anchoreEl.setAttribute("href", trailerLink);
+   var thumbnail = document.createElement("img");
+   thumbnail.setAttribute("src", trailerThumb);
+   anchoreEl.appendChild(thumbnail);
+   trailerDisplay.appendChild(anchoreEl);
+   playIconToggle();
+
+   // trailerDisplay.textContent = '';
+   // var anchoreEl = document.createElement("iframe");
+   // anchoreEl.setAttribute("framborder", '0');
+   // trailerLink = trailerLink.replace("watch?v=", "embed/");
+   // anchoreEl.setAttribute("src", trailerLink);
+   // trailerDisplay.appendChild(anchoreEl);
+
 };
 
 
@@ -235,12 +253,15 @@ var searchFormHandler = function(event){
       getMovieId(movieTitleSearched);
       // display the movie name in the search history if it doesn't exist already
       // use conditionals
-      if (!currentSearchArr.includes(movieTitleSearched)){
+      
+      if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())){
+         
          displaySearchedMovie(movieTitleSearched);
-      }
+       
+      };
    } else {
       // will be replaced with modal later 
-      alert("Please enter a city name")
+      alert("Please enter a movie name")
    }
 
 
@@ -250,7 +271,7 @@ var searchFormHandler = function(event){
 var previousSearchClickHandler = function(event){
    var clickedElName = event.target.textContent;
    getMovieId(clickedElName);
-}
+};
 
 // function that clears the search history and the current displayed movie information
 var clear = function(event){
