@@ -66,3 +66,11 @@ iframe{
    border: 1px solid white;
 }
 
+/* streaming service style on hover */
+#streaming-services > a{
+   transition: transform .5s;
+}
+
+#streaming-services > a:hover{
+   transform:translateY(-10px);
+}
