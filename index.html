@@ -41,27 +41,48 @@
 
          <!-- Movies poster and title area. Poster of the chosen movie will be displayed here. Content will be dynamically genertad through user interaction. -->
          
-         <div  class="media-container column is-9 section is-flex card">
+         <div  class="media-container column is-9 is-flex card">
             <!-- Movie image part -->
             <div class="card-image">
-               <figure class="ml-3 image" id="poster-display">
-
+               <figure class="image" id="poster-display">
+                  
                </figure>
             </div>
             <!-- movie information -->
             <div id="movie-info">
                <!-- movie title name (header) -->
                <header class="card-header">
-                  <p  id="movie-title"></p>
+                  <p id="movie-title"></p>
                </header>
                <!-- other info (genre, release date, type etc) -->
-               <div class="card-content">
+               <div class="card-content">  
                   <ul class="content" id="general-movie-info">
-                  
+         
                   </ul>
                </div>
-
             </div>
+            <!-- plot goes here-->
+            <div class="box plot-overview">
+              <p class="plot-text">
+
+              </p>
+            </div>
+
+            <!-- slidein button test for movie description -->
+            <div class="slidein movie-plot">
+
+               <button class="button slidein-button" for="slidein-icon-checkbox">
+                  <span class="button-content">
+                     Plot Overview
+                  </span>
+                  <!-- use checkbox to simulate a click for Slide in -->  
+                  <span>
+                     <i class="fa fa-angle-right fa-2x"></i>
+                  </span>                 
+               </button>
+            </div>
+            
+           
 
          </div>
       </div>
@@ -89,9 +110,9 @@
                <img src="./assets/images/play-icon.png" alt="play-icon" id="play-icon" class="display-toggle-none">
                <!-- <div class="is-size-3 has-text-weight-bold trailer-text">Watch Trailer</div> -->
             </figure>
-            <div class="mx-3" id ='trailer-display'>
+            <figure class="mx-3 inline-block image is-2by1" id ='trailer-display'>
                
-            </div>
+            </figure>
          </div>
          
       </div>
