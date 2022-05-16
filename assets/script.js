@@ -132,6 +132,7 @@ var displayTrailer = function(obj){
    // thumbnail.setAttribute("src", trailerThumb);
    // anchoreEl.appendChild(thumbnail);
    // trailerDisplay.appendChild(anchoreEl);
+
    // playIconToggle();
 
    trailerDisplay.textContent = '';
