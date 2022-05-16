@@ -1,9 +1,50 @@
+/* main background */
 
 
 /*utility style. This is so It is easier to find the space the poster is taking */
-figure {
+/* .media-container {
    border: 1px solid black;
+} */
+
+/* Adding style when the trailer thumbnail is hovered */
+
+/* need to work this style below */
+iframe{
+  width:600px;
+  height:355px;
 }
+
+/* Trailer icon styles */
+.trailer-container{
+ position:relative;
+}
+
+.trailer-icon{
+   position:absolute;
+   top: calc(50% - 50px);
+   left: calc(50% - 50px);
+   z-index:999;
+}
+
+.trailer-text{
+   background-color: rgba(255,255,255,0.4);
+   border-radius: 5px;
+   padding:.5rem;
+}
+
+#play-icon{
+   width:100px;
+}
+
+/* toggling the display for play icon */
+.display-toggle-none{
+   display: none;
+}
+
+.display-toggle-block{
+   display: block;
+}
+/* trailer style end */
 
 
 /* Adding style to the previous search list. This is where the previous searches will populate. */
@@ -12,7 +53,11 @@ figure {
    padding:.2rem;
    text-align: center;
 }
+/* position the clear button at the bottom of search history */
 
+.clearBtn-container{
+   padding-top:1rem;
+}
 /* If the searched movies names are hovered */
 .list-item:hover{
    cursor: pointer;
@@ -61,3 +106,43 @@ figure {
    cursor: pointer;
  }
  /*--End of Modal Section--*/
+/* streaming service style on hover */
+#streaming-services > a{
+   transition: transform .5s;
+}
+
+#streaming-services > a:hover{
+   transform:translateY(-10px);
+}
+/* movie information styling */
+#general-movie-info > li{
+   border-bottom: 1px solid black;
+   font-weight:500;
+}
+
+/* styling slide in buttion for the movie plot overview */
+
+
+.slidein{
+   display:none;
+}
+
+.plot-overview{
+   text-align: center;
+   display: none;
+   width:40%;
+   height:100%;
+   overflow: hidden;
+}
+
+
+
+.slidein-button{
+   height:100%;
+   padding-left: 0;
+   padding-right: 0.1rem;
+}
+
+.button-content{
+   writing-mode: vertical-lr;
+}

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<<<<<<< HEAD
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +10,21 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
    <link rel="stylesheet" href="./assets/style.css">
    <link rel="icon" href="./assets/images/popcorn icon.jpg">
+=======
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Searcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="icon" href="./assets/images/popcorn icon.jpg">
+    <link rel="stylesheet" href="./assets/style.css">
+>>>>>>> 05cf3ca3d6cf7415a14ce8f7587975a099df06e1
 </head>
 
 <body>
    <!-- Title of the Web Page / Header -->
-   <header class="hero is-primary mb-5">
+   <header class="hero is-primary">
       <div class="hero-body has-text-centered">
          <h1 class="title is-size-1">
             Stream Searcher
@@ -41,21 +52,82 @@
          </form>
 
          <!-- Movies poster and title area. Poster of the chosen movie will be displayed here. Content will be dynamically genertad through user interaction. -->
-         <figure class="column is-9 section" id="poster-display">
+         
+         <div  class="media-container column is-9 is-flex card">
+            <!-- Movie image part -->
+            <div class="card-image">
+               <figure class="image" id="poster-display">
+                  
+               </figure>
+            </div>
+            <!-- movie information -->
+            <div id="movie-info">
+               <!-- movie title name (header) -->
+               <header class="card-header">
+                  <p id="movie-title"></p>
+               </header>
+               <!-- other info (genre, release date, type etc) -->
+               <div class="card-content">  
+                  <ul class="content" id="general-movie-info">
+         
+                  </ul>
+               </div>
+            </div>
+            <!-- plot goes here-->
+            <div class="box plot-overview">
+              <p class="plot-text">
 
+<<<<<<< HEAD
          </figure>
+=======
+              </p>
+            </div>
+
+            <!-- slidein button test for movie description -->
+            <div class="slidein movie-plot">
+
+               <button class="button slidein-button" for="slidein-icon-checkbox">
+                  <span class="button-content">
+                     Plot Overview
+                  </span>
+                  <!-- use checkbox to simulate a click for Slide in -->  
+                  <span>
+                     <i class="fa fa-angle-right fa-2x"></i>
+                  </span>                 
+               </button>
+            </div>
+            
+           
+>>>>>>> 05cf3ca3d6cf7415a14ce8f7587975a099df06e1
 
       </div>
 
       <!-- Second Row with serach history and IMDB info -->
 
       <div class="section columns is-variable">
-
-         <div class="column content is-3 box">
-            <h3 class="is-size-3 has-text-centered">Search History</h3>
+         <!-- search history -->
+         <div class="column is-3 box has-text-centered">
+            <h3 class="is-size-3">Search History</h3>
             <ul id="previous-searches" class="previous-searches">
 
             </ul>
+            <!-- The clear button to clear the search history -->
+            <div class="has-text-centered clearBtn-container display-toggle-none" id="clear-btn">
+               <button class="button is-rounded is-primary is-hovered">Clear History</button>
+            </div>
+         </div>
+
+         <!-- movie trailer -->
+         <div class="column is-9 has-text-centered trailer-container">
+
+            <!-- Play Icon -->
+            <figure class="inline-block trailer-icon">
+               <img src="./assets/images/play-icon.png" alt="play-icon" id="play-icon" class="display-toggle-none">
+               <!-- <div class="is-size-3 has-text-weight-bold trailer-text">Watch Trailer</div> -->
+            </figure>
+            <figure class="mx-3 inline-block" id ='trailer-display'>
+               
+            </figure>
          </div>
 
       </div>

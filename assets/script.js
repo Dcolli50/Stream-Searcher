@@ -5,6 +5,26 @@ var searchForm = document.querySelector("#search-form");
 var searchBar = document.querySelector("#search-bar");
 var streamingServices = document.querySelector("#streaming-services");
 var posterDisplay = document.querySelector("#poster-display");
+var trailerDisplay = document.querySelector("#trailer-display");
+var playIcon = document.querySelector("#play-icon");
+var clearBtn = document.querySelector("#clear-btn")
+var movieInfo = document.getElementById("movie-info");
+var movieTitle = document.getElementById("movie-title");
+var GenMovieInfo = document.getElementById("general-movie-info");
+var slideInBtn = document.querySelector(".slidein");
+var plot = document.querySelector(".plot-overview");
+
+
+
+// function for toggling the play button. It kicks in everytime a trailer is displayed. See displayTrailer() function
+var playIconToggle = function(){
+   playIcon.classList.toggle("display-toggle-block", "display-toggle-none");
+};
+
+// function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
+var clearBtnToggle = function(){
+   clearBtn.classList.toggle("display-toggle-block", "display-toggle-none");
+};
 var modal = document.getElementById("myModal");
 var modalText = document.getElementById("modal-text");
 var closeBtn= document.getElementById("close-btn");
@@ -41,10 +61,10 @@ var displayStreamingServices = function (iconUrlArr, serviceLinkArr) {
 var getIconUrls = function (iconIdArr) {
    var serviceIconUrl = [];
    // use fetch to get the necessary source object containing link to the icons
-   var apiUrl = "https://api.watchmode.com/v1/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
-   fetch(apiUrl).then(function (response) {
-      if (response.ok) {
-         response.json().then(function (data) {
+   var apiUrl="https://api.watchmode.com/v1/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
+   fetch(apiUrl).then(function(response){
+      if(response.ok){
+         response.json().then(function(data){
             // iterate over the list of icon IDs
             for (var i = 0; i < iconIdArr.length; i++) {
                // for every icon ID (currIconId) from previous loop, match that icons ID with the API Obj
@@ -64,28 +84,91 @@ var getIconUrls = function (iconIdArr) {
    });
 };
 
+// Function to display general movie information
+var displayMovieInfo = function(obj){
+   console.log("Movie Information obj" + obj);
+   // clear previous displayed info
+   GenMovieInfo.textContent = "";
+
+   movieInfo.classList = "card-content card";
+   // set the title for the movie
+   movieTitle.className = "card-header-title";
+   movieTitle.textContent = obj.title;
+
+   // use a for loop to display other information as list elements
+   // make an array with texts to be appended.
+   var texts = ["Type: "+obj.type, "Release Date: "+obj.date, "Genre: "+obj.genreArr.toString()];
+   for (var i=0;i<texts.length;i++){
+      var infoEl = document.createElement("li");
+      infoEl.textContent = texts[i];
+      GenMovieInfo.appendChild(infoEl);
+   };
+   // the last two list items with badges
+   var ratingEl = document.createElement("li");
+   ratingEl.textContent = "User Rating: ";
+   var ratingTag = document.createElement("span");
+   ratingTag.textContent = obj.rating;
+   ratingTag.classList = "tag is-success";
+   ratingEl.appendChild(ratingTag);
+
+
+   var scoreEl = document.createElement("li");
+   scoreEl.textContent = "Critic Score: ";
+   var scoreTag = document.createElement("li");
+   scoreTag.textContent = obj.score;
+   scoreTag.classList = "tag is-danger";
+   scoreEl.appendChild(scoreTag);
+
+   GenMovieInfo.appendChild(ratingEl);
+   GenMovieInfo.appendChild(scoreEl);
+   
+   // make the slidein button appear
+   slideInBtn.style.display = 'block';
+
+};
+
+
 // Get the information for movie (Streaming service) using the previously obtained ID from GetMovieID function.
 var getMovieInfo = function (id) {
    // initialize an array to hold all the streaming services
    var streamServiceArr = [];
    var iconIds = [];
    var serviceLinks = [];
-   var apiUrl = "https://api.watchmode.com/v1/title/" + id + "/sources/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io";
 
-   fetch(apiUrl).then(function (response) {
-      if (response.ok) {
-         response.json().then(function (data) {
-            for (var i = 0; i < data.length; i++) {
-               if (!streamServiceArr.includes(data[i].name)) {
-                  streamServiceArr.push(data[i].name);
-                  iconIds.push(data[i].source_id);
-                  serviceLinks.push(data[i].web_url);
+   var apiUrl = "https://api.watchmode.com/v1/title/" + id +"/details/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&append_to_response=sources";
+
+   // var apiUrl2 = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
+   
+   fetch(apiUrl).then(function(response){
+      if(response.ok){
+         response.json().then(function(data){
+            for(var i=0;i<data.sources.length; i++){
+               if (!streamServiceArr.includes(data.sources[i].name)){
+                  streamServiceArr.push(data.sources[i].name);
+                  iconIds.push(data.sources[i].source_id);
+                  serviceLinks.push(data.sources[i].web_url);
+
                }
             };
+            // add general movie info
+            streamServiceObj.title = data.title;
+            streamServiceObj.type = data.type;
+            streamServiceObj.date = data.release_date;
+            streamServiceObj.genreArr = data.genre_names;
+            streamServiceObj.rating = data.user_rating;
+            streamServiceObj.score = data.critic_score;
+            // add movie plot 
+            streamServiceObj.plot = data.plot_overview;
+            // add trailer info
+            streamServiceObj.trailerLink = data.trailer;
+            streamServiceObj.trailerThumbnail = data.trailer_thumbnail;
+            // add stream service info
             streamServiceObj.serviceLinks = serviceLinks;
             streamServiceObj.serviceNames = streamServiceArr;
             streamServiceObj.iconsIds = iconIds;
             getIconUrls(streamServiceObj.iconsIds);
+            displayTrailer(streamServiceObj);
+            displayMovieInfo(streamServiceObj);
          });
       } else {
          // alert("Streaming Source not Found!");
@@ -103,21 +186,58 @@ var displayPoster = function (posterUrl) {
    posterImgEl.setAttribute("src", posterUrl);
    posterImgEl.setAttribute("alt", "Movie Poster");
    posterDisplay.appendChild(posterImgEl);
-}
+};
+
+// display Movie trailer
+var displayTrailer = function(obj){
+
+   // trailerDisplay.textContent = '';
+   // var anchoreEl = document.createElement("iframe");
+   // anchoreEl.setAttribute("framborder", '0');
+   // trailerLink = trailerLink.replace("watch?v=", "embed/");
+   // anchoreEl.setAttribute("src", trailerLink);
+   // trailerDisplay.appendChild(anchoreEl);
+
+   // playIconToggle();
+
+   trailerDisplay.textContent = '';
+
+   if (!obj.trailerLink){
+      var anchoreEl = document.createElement("a");
+      anchoreEl.setAttribute("target","_blank");
+      anchoreEl.setAttribute("href", 'https://www.youtube.com/results?search_query='+obj.title + ' trailer');
+      var badThumbnail = document.createElement("img");
+      badThumbnail.setAttribute("src", "./assets/images/error.jpg");
+      badThumbnail.setAttribute("title", "No Trailer found. Click here to search on YouTube!");
+      anchoreEl.appendChild(badThumbnail);
+      trailerDisplay.appendChild(anchoreEl);
+   } else {
+      var anchoreEl = document.createElement("iframe");
+      anchoreEl.setAttribute("framborder", '0');
+      var trailerLink = obj.trailerLink;
+      trailerLink = trailerLink.replace("watch?v=", "embed/");
+      anchoreEl.setAttribute("src", trailerLink);
+      trailerDisplay.appendChild(anchoreEl);
+   }
+   
+};
 
 
 // Get the WatchMode ID for the movie through this function
-var getMovieId = function (movieName) {
-   var apiUrl =
-      "https://api.watchmode.com/v1/autocomplete-search/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&search_value=" + movieName + "&search_type=2";
+var getMovieId = function(movieName){
+   var apiUrl = 
+   "https://api.watchmode.com/v1/autocomplete-search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_value=" + movieName +"&search_type=2";
 
-   // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=aLmqepfkqFpg8Bt9eHTBrVrvxQChgOYWAAUXD2io&search_field=name&search_value=" + movieName;
+
+   // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_field=name&search_value=" + movieName;
 
    fetch(apiUrl).then(function (response) {
       // check if the response is ok
-      if (response.ok) {
-         response.json().then(function (data) {
+      if(response.ok){
+         response.json().then(function(data){
+
             // if there are multiple titles containing the movie name. Use a loop to show it all.
+      
             console.log(data.results[0].id);
             var movieId = data.results[0].id;
             var poster = data.results[0].image_url;
@@ -136,15 +256,17 @@ var getMovieId = function (movieName) {
 // Display movie's name in the search history. This function will be called in two different places:
 // When a movie name is searched by the user
 // When movie search history is loaded from localStorage (See: loadSearchHistory function)
-var displaySearchedMovie = function (movieName) {
-   var movieNameItem = document.createElement("li");
-   movieNameItem.classList = "list-item box";
-   movieNameItem.textContent = movieName;
-   // Add the name to the currentSearchArr
-   currentSearchArr.push(movieName);
-   // Add in the local Storage
-   saveSearchHistory(currentSearchArr);
-   previousSearches.appendChild(movieNameItem);
+var displaySearchedMovie = function(movieName){
+      clearBtnToggle();
+      var movieNameItem = document.createElement("li");
+      movieNameItem.classList = "list-item box";
+      movieName = movieName.toUpperCase();
+      movieNameItem.textContent = movieName;
+      // Add the name to the currentSearchArr
+      currentSearchArr.push(movieName);
+      // Add in the local Storage
+      saveSearchHistory(currentSearchArr);
+      previousSearches.appendChild(movieNameItem);
 };
 
 
@@ -189,7 +311,14 @@ var searchFormHandler = function (event) {
 
    if (movieTitleSearched) {
       getMovieId(movieTitleSearched);
-      displaySearchedMovie(movieTitleSearched);
+      // display the movie name in the search history if it doesn't exist already
+      // use conditionals
+      
+      if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())){
+         
+         displaySearchedMovie(movieTitleSearched);
+       
+      };
    } else {
       // alert("Please enter a title");
       showModal();
@@ -217,7 +346,50 @@ function showModal() {
 //-----------END MODAL SECTION-----------//
 
 
+// The function that displays movie info if their names are clicked in the Search History
+var previousSearchClickHandler = function(event){
+   var clickedElName = event.target.textContent;
+   getMovieId(clickedElName);
+};
+
+// function that clears the search history and the current displayed movie information
+var clear = function(event){
+   if (event.target.textContent === "Clear History"){
+      // update the currentSearchArr
+      currentSearchArr = [];
+      saveSearchHistory(currentSearchArr);
+      // refresh the page
+      // window.location.reload();
+      previousSearches.textContent = "";
+      
+   }
+   
+};
+
+// function for showing the plot overview
+var showPlotOverview = function(obj){
+   if (plot.style.display === 'block'){
+      plot.style.display = 'none';
+   } else {
+      plot.style.display = 'block';
+      plot.textContent = "";
+   }
+   var plotText = document.createElement("p");
+   plotText.textContent = obj.plot;
+   plot.appendChild(plotText);
+};
 
 loadSearchHistory();
+// adding the event listern and handler for showing plot overview for the movies
+slideInBtn.addEventListener("click", function(){
+   showPlotOverview(streamServiceObj);
+});
 // adding the event listener and handler to search-form for searching movie by titles
-searchForm.addEventListener("submit", searchFormHandler); // calling the searchedFormHandler function when the form is submitted
+searchForm.addEventListener("submit", searchFormHandler); // calling the searchedFormHandler function when the form is submitted.
+
+// adding the event listener and handler for search history section. Clicking on the movie names will display
+// the information about the movie.
+previousSearches.addEventListener("click", previousSearchClickHandler);
+
+// adding the event listener and handler for the clear button. It will call the clear function
+clearBtn.addEventListener("click", clear);
