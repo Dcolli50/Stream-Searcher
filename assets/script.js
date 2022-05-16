@@ -224,13 +224,16 @@ var getMovieId = function(movieName){
    var apiUrl = 
    "https://api.watchmode.com/v1/autocomplete-search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_value=" + movieName +"&search_type=2";
 
+
    // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_field=name&search_value=" + movieName;
 
    fetch(apiUrl).then(function(response){
       // check if the response is ok
       if(response.ok){
          response.json().then(function(data){
+
             // if there are multiple titles containing the movie name. Use a loop to show it all.
+      
             console.log(data.results[0].id);
             var movieId = data.results[0].id;
             var poster = data.results[0].image_url;
