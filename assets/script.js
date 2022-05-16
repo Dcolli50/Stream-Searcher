@@ -221,6 +221,7 @@ var displayTrailer = function(obj){
 
 // Get the WatchMode ID for the movie through this function
 var getMovieId = function(movieName){
+   var movieObjArr = [];
    var apiUrl = 
    "https://api.watchmode.com/v1/autocomplete-search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_value=" + movieName +"&search_type=2";
 
@@ -233,8 +234,18 @@ var getMovieId = function(movieName){
          response.json().then(function(data){
 
             // if there are multiple titles containing the movie name. Use a loop to show it all.
+            for (var i=0;i<data.results.length;i++){
+               var movieObj = {
+                  id: data.results[i].id,
+                  name: data.results[i].name
+               }
+
+               if (!movieObjArr.includes(movieObj)){
+                  movieObjArr.push(movieObj);
+               }
+            };
+            console.log(movieObjArr);
       
-            console.log(data.results[0].id);
             var movieId = data.results[0].id;
             var poster = data.results[0].image_url;
             displayPoster(poster);
