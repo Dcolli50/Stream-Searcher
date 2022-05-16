@@ -2,9 +2,9 @@
 
 
 /*utility style. This is so It is easier to find the space the poster is taking */
-.media-container {
+/* .media-container {
    border: 1px solid black;
-}
+} */
 
 /* Adding style when the trailer thumbnail is hovered */
 
@@ -106,3 +106,43 @@ iframe{
    cursor: pointer;
  }
  /*--End of Modal Section--*/
+/* streaming service style on hover */
+#streaming-services > a{
+   transition: transform .5s;
+}
+
+#streaming-services > a:hover{
+   transform:translateY(-10px);
+}
+/* movie information styling */
+#general-movie-info > li{
+   border-bottom: 1px solid black;
+   font-weight:500;
+}
+
+/* styling slide in buttion for the movie plot overview */
+
+
+.slidein{
+   display:none;
+}
+
+.plot-overview{
+   text-align: center;
+   display: none;
+   width:40%;
+   height:100%;
+   overflow: hidden;
+}
+
+
+
+.slidein-button{
+   height:100%;
+   padding-left: 0;
+   padding-right: 0.1rem;
+}
+
+.button-content{
+   writing-mode: vertical-lr;
+}
