@@ -12,6 +12,15 @@ var movieTitle = document.getElementById("movie-title");
 var GenMovieInfo = document.getElementById("general-movie-info");
 var slideInBtn = document.querySelector(".slidein");
 var plot = document.querySelector(".plot-overview");
+
+
+
+// function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
+var clearBtnToggle = function(){
+   clearBtn.classList.toggle("display-toggle-block", "display-toggle-none");
+};
+
+// Modal variable declaration
 var modal = document.getElementById("myModal");
 var modalText = document.getElementById("modal-text");
 var closeBtn = document.getElementById("close-btn");
@@ -216,9 +225,10 @@ var displayTrailer = function (obj) {
 
 
 // Get the WatchMode ID for the movie through this function
-var getMovieId = function (movieName) {
-   var apiUrl =
-      "https://api.watchmode.com/v1/autocomplete-search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_value=" + movieName + "&search_type=2";
+var getMovieId = function(movieName){
+   var movieObjArr = [];
+   var apiUrl = 
+   "https://api.watchmode.com/v1/autocomplete-search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_value=" + movieName +"&search_type=2";
 
 
    // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_field=name&search_value=" + movieName;
@@ -229,12 +239,61 @@ var getMovieId = function (movieName) {
          response.json().then(function (data) {
 
             // if there are multiple titles containing the movie name. Use a loop to show it all.
+            for (var i=0;i<data.results.length;i++){
+               var movieObj = {
+                  id: data.results[i].id,
+                  name: data.results[i].name,
+                  imgUrl: data.results[i].image_url
+               }
 
-            console.log(data.results[0].id);
-            var movieId = data.results[0].id;
-            var poster = data.results[0].image_url;
-            displayPoster(poster);
-            getMovieInfo(movieId);
+               if (!movieObjArr.filter(obj => obj.name === data.results[i].name).length > 0) {
+                  /* movieObjArr dose not contain the element we're looking for */
+                  movieObjArr.push(movieObj);
+                }
+            };
+
+            console.log("Before adding modal: " + movieObjArr);
+            if (movieObjArr.length === 1){
+               var movieId = movieObjArr[0].id;
+               var poster = movieObjArr[0].imgUrl;
+               displayPoster(poster);
+               getMovieInfo(movieId);
+
+            } else {
+               showModal();
+               modalText.innerHTML="";
+               modalText.innerHTML = "<h2 class='modal-header'> Did you Mean? </h2>";
+               for (var i=0;i<movieObjArr.length;i++){
+               var text = "<li class='modal-content-movie list-item box' data-image='"+movieObjArr[i].imgUrl+"' id='"+ movieObjArr[i].id+"'>" + movieObjArr[i].name + "</li>";
+               modalText.innerHTML += text;
+               };
+
+               document.querySelector('.modal').addEventListener('click', function(event){
+               var clickedClass = event.target;
+               if(clickedClass.classList.contains("modal-content-movie")){
+                  var movieId = clickedClass.getAttribute("id");
+                  var poster = clickedClass.getAttribute("data-image");
+                  displayPoster(poster);
+                  getMovieInfo(movieId);
+                  var movieTitleSearched = clickedClass.textContent;
+                  if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())){
+         
+                     displaySearchedMovie(movieTitleSearched);
+                   
+                  };
+                  modal.style.display = 'none';
+               }
+            });
+         }
+            
+            
+            
+
+
+            // var movieId = data.results[0].id;
+            // var poster = data.results[0].image_url;
+            // displayPoster(poster);
+            // getMovieInfo(movieId);
 
          });
       } else {
@@ -304,12 +363,12 @@ var searchFormHandler = function (event) {
       getMovieId(movieTitleSearched);
       // display the movie name in the search history if it doesn't exist already
       // use conditionals
-
-      if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())) {
-
-         displaySearchedMovie(movieTitleSearched);
-
-      };
+      
+      // if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())){
+         
+      //    displaySearchedMovie(movieTitleSearched);
+       
+      // };
    } else {
       showModal();
       modalText.innerHTML = "<p>Please enter a title!<br> Click outside of this box to exit.</p>";
@@ -319,14 +378,13 @@ var searchFormHandler = function (event) {
 function showModal() {
    //----------START MODAL SECTION----------//
    modal.style.display = "block";
-   console.log(modal);
    //user can close the modal by clicking the (x) or clicking outside of the modal
-   document.getElementById("close-btn").addEventListener("click", function (event) {
-      var close = event.target.getAttribute("id");
-      if (close = "close-btn") {
-         modal.style.display = "none";
-      }
-   })
+   // document.getElementById("close-btn").addEventListener("click", function(event){
+   //    var close = event.target.getAttribute("id");
+   //    if (close === "close-btn") {
+   //       modal.style.display = "none";
+   //    }
+   // })
    window.onclick = function (event) {
       if (event.target == modal) {
          modal.style.display = "none";

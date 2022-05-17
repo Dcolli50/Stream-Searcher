@@ -153,6 +153,31 @@ iframe {
   padding-right: 0.1rem;
 }
 
-.button-content {
-  writing-mode: vertical-lr;
+.button-content{
+   writing-mode: vertical-lr;
+}
+
+/* movie list display modal  */
+.modal-content-movie {
+   border-bottom: 1px solid black;
+   list-style-type: none;
+   cursor: pointer;
+   max-width:30%;
+   text-align: center;
+   margin:auto;
+}
+
+.modal-content-movie:hover{
+   background-color: rgba(81, 81, 217, 0.868);
+   color:white;
+   border-bottom: 1px solid white;
+}
+
+.modal-header{
+   margin: auto;
+   font-size: 1.5rem;
+   margin-bottom: 2rem;
+   border-bottom: 2px solid;
+   width: 30%;
+   font-weight: 700;
 }
