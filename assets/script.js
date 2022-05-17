@@ -12,7 +12,7 @@ var movieTitle = document.getElementById("movie-title");
 var GenMovieInfo = document.getElementById("general-movie-info");
 var slideInBtn = document.querySelector(".slidein");
 var plot = document.querySelector(".plot-overview");
-
+var testPoster = document.getElementById("test-poster");
 
 
 // function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
@@ -186,6 +186,13 @@ var displayPoster = function (posterUrl) {
    var posterImgEl = document.createElement("img");
    posterImgEl.setAttribute("src", posterUrl);
    posterImgEl.setAttribute("alt", "Movie Poster");
+   // animate the appearance start
+   posterImgEl.className = "poster-slidein-start";
+   requestAnimationFrame(() => {
+      posterImgEl.classList.remove("poster-slidein-start");
+      posterImgEl.classList.add("poster-slidein-end");
+   });
+   // animate the apparance end
    posterImgEl.setAttribute("title","Click to Enlarge");
    posterDisplay.appendChild(posterImgEl);
 };
@@ -425,6 +432,7 @@ var showPlotOverview = function (obj) {
    plotText.textContent = obj.plot;
    plot.appendChild(plotText);
 };
+
 
 loadSearchHistory();
 // adding the event listern and handler for showing plot overview for the movies

@@ -6,6 +6,19 @@
    border: 1px solid black;
 } */
 
+/* poster Display Animation */
+.poster-slidein-start{
+  opacity:0;
+  transform: translate(-20vw, 0);
+  transition: transform 2000ms, opacity 2000ms;
+}
+
+/* END of poster Display Animation */
+.poster-slidein-end{
+  opacity: 1;
+  transform:translate(0);
+  transition: transform 2000ms, opacity 2000ms;
+}
 
 /* need to work this style below */
 iframe {
@@ -128,17 +141,18 @@ iframe {
 .poster-display{
   cursor: pointer;
 }
+
 .poster-in-modal{
   height: auto;
   width: 50%;
   transition: opacity 1000ms;
 }
 
+/* utility class for animation */
 .fade-out{
   opacity: 0;
 }
-
-
+/* --END of utility class for animation */
 
 .transparent-modal{
   background-color: #4a4a4a00;
