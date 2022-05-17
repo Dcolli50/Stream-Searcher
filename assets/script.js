@@ -62,7 +62,7 @@ var displayStreamingServices = function (iconUrlArr, serviceLinkArr) {
 var getIconUrls = function (iconIdArr) {
    var serviceIconUrl = [];
    // use fetch to get the necessary source object containing link to the icons
-   var apiUrl = "https://api.watchmode.com/v1/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
+   var apiUrl = "https://api.watchmode.com/v1/sources/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr";
    fetch(apiUrl).then(function (response) {
       if (response.ok) {
          response.json().then(function (data) {
@@ -137,9 +137,9 @@ var getMovieInfo = function (id) {
    var iconIds = [];
    var serviceLinks = [];
 
-   var apiUrl = "https://api.watchmode.com/v1/title/" + id + "/details/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&append_to_response=sources";
+   var apiUrl = "https://api.watchmode.com/v1/title/" + id + "/details/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr&append_to_response=sources";
 
-   // var apiUrl2 = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
+   // var apiUrl2 = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr";
 
    fetch(apiUrl).then(function (response) {
       if (response.ok) {
@@ -228,10 +228,10 @@ var displayTrailer = function (obj) {
 var getMovieId = function(movieName){
    var movieObjArr = [];
    var apiUrl = 
-   "https://api.watchmode.com/v1/autocomplete-search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_value=" + movieName +"&search_type=2";
+   "https://api.watchmode.com/v1/autocomplete-search/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr&search_value=" + movieName +"&search_type=2";
 
 
-   // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_field=name&search_value=" + movieName;
+   // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr&search_field=name&search_value=" + movieName;
 
    fetch(apiUrl).then(function (response) {
       // check if the response is ok
