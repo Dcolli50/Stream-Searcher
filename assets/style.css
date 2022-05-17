@@ -6,14 +6,6 @@
    border: 1px solid black;
 } */
 
-/* poster-display modal upon click */
-.poster-display{
-  cursor: pointer;
-}
-.poster-in-modal{
-  height: auto;
-  width: 50%;
-}
 
 /* need to work this style below */
 iframe {
@@ -131,6 +123,31 @@ iframe {
 }
 
 /*--End of Modal Section--*/
+
+/*--Star of poster-display modal upon click-- */
+.poster-display{
+  cursor: pointer;
+}
+.poster-in-modal{
+  height: auto;
+  width: 50%;
+  transition: opacity 1000ms;
+}
+
+.fade-out{
+  opacity: 0;
+}
+
+
+
+.transparent-modal{
+  background-color: #4a4a4a00;
+  border: none;
+}
+
+/*--- End of poster-display modal upon click end styling--- */
+
+
 /* movie information styling */
 #general-movie-info>li {
   border-bottom: 1px solid black;

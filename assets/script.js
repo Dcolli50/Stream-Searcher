@@ -186,6 +186,7 @@ var displayPoster = function (posterUrl) {
    var posterImgEl = document.createElement("img");
    posterImgEl.setAttribute("src", posterUrl);
    posterImgEl.setAttribute("alt", "Movie Poster");
+   posterImgEl.setAttribute("title","Click to Enlarge");
    posterDisplay.appendChild(posterImgEl);
 };
 
@@ -444,7 +445,16 @@ clearBtn.addEventListener("click", clear);
 // adding the event listener for poster clicking
 posterDisplay.addEventListener('click',(event) => {
    showModal();
-   // modalText.innerHTML = "<img class='poster-in-modal' src="+streamServiceObj.posterUrl+">";
-   modalText.innerHTML = "<img class='poster-in-display' src='./assets/images/test-poster.jpg'>"
+   modalText.innerHTML = "<img class='poster-in-modal fade-out' src="+streamServiceObj.posterUrl+">";
+   // modalText.innerHTML = "<img class='poster-in-modal fade-out' src='./assets/images/test-poster.jpg'>"
+  
+   requestAnimationFrame(()=>{
+      var posterInModal = document.querySelector(".poster-in-modal");
+      posterInModal.classList.remove("fade-out");
+   });
+  
+   var modalContainer = document.querySelector(".modal-content");
+   console.log(modalContainer);
+   modalContainer.classList.add("transparent-modal");
 
 });
