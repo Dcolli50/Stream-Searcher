@@ -163,7 +163,7 @@ var getMovieInfo = function (id) {
             streamServiceObj.plot = data.plot_overview;
             // add trailer info
             streamServiceObj.trailerLink = data.trailer;
-            streamServiceObj.trailerThumbnail = data.trailer_thumbnail;
+            streamServiceObj.posterUrl = data.poster;
             // add stream service info
             streamServiceObj.serviceLinks = serviceLinks;
             streamServiceObj.serviceNames = streamServiceArr;
@@ -440,3 +440,11 @@ previousSearches.addEventListener("click", previousSearchClickHandler);
 
 // adding the event listener and handler for the clear button. It will call the clear function
 clearBtn.addEventListener("click", clear);
+
+// adding the event listener for poster clicking
+posterDisplay.addEventListener('click',(event) => {
+   showModal();
+   // modalText.innerHTML = "<img class='poster-in-modal' src="+streamServiceObj.posterUrl+">";
+   modalText.innerHTML = "<img class='poster-in-display' src='./assets/images/test-poster.jpg'>"
+
+});

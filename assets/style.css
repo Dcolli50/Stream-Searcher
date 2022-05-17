@@ -6,7 +6,14 @@
    border: 1px solid black;
 } */
 
-/* Adding style when the trailer thumbnail is hovered */
+/* poster-display modal upon click */
+.poster-display{
+  cursor: pointer;
+}
+.poster-in-modal{
+  height: auto;
+  width: 50%;
+}
 
 /* need to work this style below */
 iframe {
