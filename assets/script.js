@@ -7,6 +7,13 @@ var streamingServices = document.querySelector("#streaming-services");
 var posterDisplay = document.querySelector("#poster-display");
 var trailerDisplay = document.querySelector("#trailer-display");
 var clearBtn = document.querySelector("#clear-btn")
+var movieInfo = document.getElementById("movie-info");
+var movieTitle = document.getElementById("movie-title");
+var GenMovieInfo = document.getElementById("general-movie-info");
+var slideInBtn = document.querySelector(".slidein");
+var plot = document.querySelector(".plot-overview");
+
+
 
 // function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
 var clearBtnToggle = function(){
@@ -71,6 +78,50 @@ var getIconUrls = function (iconIdArr) {
    });
 };
 
+// Function to display general movie information
+var displayMovieInfo = function(obj){
+   console.log("Movie Information obj" + obj);
+   // clear previous displayed info
+   GenMovieInfo.textContent = "";
+
+   movieInfo.classList = "card-content card";
+   // set the title for the movie
+   movieTitle.className = "card-header-title";
+   movieTitle.textContent = obj.title;
+
+   // use a for loop to display other information as list elements
+   // make an array with texts to be appended.
+   var texts = ["Type: "+obj.type, "Release Date: "+obj.date, "Genre: "+obj.genreArr.toString()];
+   for (var i=0;i<texts.length;i++){
+      var infoEl = document.createElement("li");
+      infoEl.textContent = texts[i];
+      GenMovieInfo.appendChild(infoEl);
+   };
+   // the last two list items with badges
+   var ratingEl = document.createElement("li");
+   ratingEl.textContent = "User Rating: ";
+   var ratingTag = document.createElement("span");
+   ratingTag.textContent = obj.rating;
+   ratingTag.classList = "tag is-success";
+   ratingEl.appendChild(ratingTag);
+
+
+   var scoreEl = document.createElement("li");
+   scoreEl.textContent = "Critic Score: ";
+   var scoreTag = document.createElement("li");
+   scoreTag.textContent = obj.score;
+   scoreTag.classList = "tag is-danger";
+   scoreEl.appendChild(scoreTag);
+
+   GenMovieInfo.appendChild(ratingEl);
+   GenMovieInfo.appendChild(scoreEl);
+   
+   // make the slidein button appear
+   slideInBtn.style.display = 'block';
+
+};
+
+
 // Get the information for movie (Streaming service) using the previously obtained ID from GetMovieID function.
 var getMovieInfo = function (id) {
    // initialize an array to hold all the streaming services
@@ -81,7 +132,7 @@ var getMovieInfo = function (id) {
    var apiUrl = "https://api.watchmode.com/v1/title/" + id +"/details/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&append_to_response=sources";
 
    // var apiUrl2 = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
-
+   
    fetch(apiUrl).then(function(response){
       if(response.ok){
          response.json().then(function(data){
@@ -90,16 +141,28 @@ var getMovieInfo = function (id) {
                   streamServiceArr.push(data.sources[i].name);
                   iconIds.push(data.sources[i].source_id);
                   serviceLinks.push(data.sources[i].web_url);
+
                }
             };
+            // add general movie info
             streamServiceObj.title = data.title;
+            streamServiceObj.type = data.type;
+            streamServiceObj.date = data.release_date;
+            streamServiceObj.genreArr = data.genre_names;
+            streamServiceObj.rating = data.user_rating;
+            streamServiceObj.score = data.critic_score;
+            // add movie plot 
+            streamServiceObj.plot = data.plot_overview;
+            // add trailer info
             streamServiceObj.trailerLink = data.trailer;
-            streamServiceObj.trailerThumbnail = data.trailer_thumbnail;
+            streamServiceObj.trialerThumbnail = data.trailer_thumbnail;
+            // add stream service info
             streamServiceObj.serviceLinks = serviceLinks;
             streamServiceObj.serviceNames = streamServiceArr;
             streamServiceObj.iconsIds = iconIds;
             getIconUrls(streamServiceObj.iconsIds);
             displayTrailer(streamServiceObj);
+            displayMovieInfo(streamServiceObj);
          });
       } else {
          // alert("Streaming Source not Found!");
@@ -295,7 +358,24 @@ var clear = function(event){
    
 };
 
+// function for showing the plot overview
+var showPlotOverview = function(obj){
+   if (plot.style.display === 'block'){
+      plot.style.display = 'none';
+   } else {
+      plot.style.display = 'block';
+      plot.textContent = "";
+   }
+   var plotText = document.createElement("p");
+   plotText.textContent = obj.plot;
+   plot.appendChild(plotText);
+};
+
 loadSearchHistory();
+// adding the event listern and handler for showing plot overview for the movies
+slideInBtn.addEventListener("click", function(){
+   showPlotOverview(streamServiceObj);
+});
 // adding the event listener and handler to search-form for searching movie by titles
 searchForm.addEventListener("submit", searchFormHandler); // calling the searchedFormHandler function when the form is submitted.
 
