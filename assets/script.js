@@ -171,9 +171,8 @@ var getMovieInfo = function (id) {
             displayMovieInfo(streamServiceObj);
          });
       } else {
-         // alert("Streaming Source not Found!");
          showModal();
-         modalText.innerHTML = "<p>Streaming source not found!</p>"
+         modalText.innerHTML = "<p>Streaming source not found!<br> Click outside of this box to exit.</p>"
       }
    });
 
@@ -246,9 +245,8 @@ var getMovieId = function(movieName){
 
          });
       } else {
-         // alert("Something went wrong!");
          showModal();
-         modalText.innerHTML = "<p>Something went wrong!</p>";
+         modalText.innerHTML = "<p>Something went wrong!<br> Click outside of this box to exit.</p>";
       }
    });
 };
@@ -320,9 +318,8 @@ var searchFormHandler = function (event) {
        
       };
    } else {
-      // alert("Please enter a title");
       showModal();
-      modalText.innerHTML = "<p>Please enter a title.</p>";
+      modalText.innerHTML = "<p>Please enter a title.<br> Click outside of this box to exit.</p>";
    }
 };
 
