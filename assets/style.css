@@ -9,137 +9,150 @@
 /* Adding style when the trailer thumbnail is hovered */
 
 /* need to work this style below */
-iframe{
-  width:600px;
-  height:355px;
+iframe {
+  width: 600px;
+  height: 355px;
 }
 
 /* Trailer icon styles */
-.trailer-container{
- position:relative;
+.trailer-container {
+  position: relative;
 }
 
-.trailer-icon{
-   position:absolute;
-   top: calc(50% - 50px);
-   left: calc(50% - 50px);
-   z-index:999;
+.trailer-icon {
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+  z-index: 999;
 }
 
-.trailer-text{
-   background-color: rgba(255,255,255,0.4);
-   border-radius: 5px;
-   padding:.5rem;
+.trailer-text {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  padding: .5rem;
 }
 
 
 /* toggling the display for play icon */
-.display-toggle-none{
-   display: none;
+.display-toggle-none {
+  display: none;
 }
 
-.display-toggle-block{
-   display: block;
+.display-toggle-block {
+  display: block;
 }
+
 /* trailer style end */
 
 
 /* Adding style to the previous search list. This is where the previous searches will populate. */
-.list-item{
-   list-style-type: none;
-   padding:.2rem;
-   text-align: center;
+.list-item {
+  list-style-type: none;
+  padding: .2rem;
+  text-align: center;
 }
+
 /* position the clear button at the bottom of search history */
 
-.clearBtn-container{
-   padding-top:1rem;
+.clearBtn-container {
+  padding-top: 1rem;
 }
+
 /* If the searched movies names are hovered */
-.list-item:hover{
-   cursor: pointer;
-   color:white;
-   background-color: rgba(81, 81, 217, 0.868);
-   border: 1px solid white;
+.list-item:hover {
+  cursor: pointer;
+  color: white;
+  background-color: rgba(81, 81, 217, 0.868);
+  border: 1px solid white;
 }
 
 /* streaming service style on hover */
-#streaming-services > a{
-   transition: transform .5s;
+#streaming-services>a {
+  transition: transform .5s;
 }
 
-#streaming-services > a:hover{
-   transform:translateY(-10px);
+#streaming-services>a:hover {
+  transform: translateY(-10px);
 }
+
 /*--Modal Section--*/
 /* The Modal (background) */
 .modal {
-   /* display: none; Hidden by default */
-   position: fixed; /* Stay in place */
-   z-index: 1; /* Sit on top */
-   left: 0;
-   top: 0;
-   width: 100%; /* Full width */
-   height: 100%; /* Full height */
-   overflow: auto; /* Enable scroll if needed */
-   background-color: rgb(0,0,0); /* Fallback color */
-   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
- }
- 
- /* Modal Content/Box */
- .modal-content {
-   background-color: #fefefe;
-   margin: 15% auto; /* 15% from the top and centered */
-   padding: 20px;
-   border: 1px solid #888;
-   width: 50%; /* Could be more or less, depending on screen size */
-   text-align: center;
- }
- 
- /* The Close Button */
- .close {
-   color: #aaa;
-   float: right;
-   font-size: 28px;
-   font-weight: bold;
- }
- 
- .close:hover,
- .close:focus {
-   color: black;
-   text-decoration: none;
-   cursor: pointer;
- }
- /*--End of Modal Section--*/
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  /* Could be more or less, depending on screen size */
+  text-align: center;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*--End of Modal Section--*/
 /* movie information styling */
-#general-movie-info > li{
-   border-bottom: 1px solid black;
-   font-weight:500;
+#general-movie-info>li {
+  border-bottom: 1px solid black;
+  font-weight: 500;
 }
 
 /* styling slide in buttion for the movie plot overview */
 
 
-.slidein{
-   display:none;
+.slidein {
+  display: none;
 }
 
-.plot-overview{
-   text-align: center;
-   display: none;
-   width:40%;
-   height:100%;
-   overflow: hidden;
+.plot-overview {
+  text-align: center;
+  display: none;
+  width: 40%;
+  height: 100%;
+  overflow: hidden;
 }
 
 
 
-.slidein-button{
-   height:100%;
-   padding-left: 0;
-   padding-right: 0.1rem;
+.slidein-button {
+  height: 100%;
+  padding-left: 0;
+  padding-right: 0.1rem;
 }
 
-.button-content{
-   writing-mode: vertical-lr;
+.button-content {
+  writing-mode: vertical-lr;
 }
