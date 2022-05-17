@@ -240,9 +240,10 @@ var getMovieId = function(movieName){
                   name: data.results[i].name
                }
 
-               if (!movieObjArr.includes(movieObj)){
+               if (!movieObjArr.filter(obj => obj.name === data.results[i].name).length > 0) {
+                  /* movieObjArr dose not contain the element we're looking for */
                   movieObjArr.push(movieObj);
-               }
+                }
             };
             console.log(movieObjArr);
       
