@@ -32,9 +32,6 @@ iframe{
    padding:.5rem;
 }
 
-#play-icon{
-   width:100px;
-}
 
 /* toggling the display for play icon */
 .display-toggle-none{
@@ -66,6 +63,14 @@ iframe{
    border: 1px solid white;
 }
 
+/* streaming service style on hover */
+#streaming-services > a{
+   transition: transform .5s;
+}
+
+#streaming-services > a:hover{
+   transform:translateY(-10px);
+}
 /*--Modal Section--*/
 /* The Modal (background) */
 .modal {
@@ -106,14 +111,6 @@ iframe{
    cursor: pointer;
  }
  /*--End of Modal Section--*/
-/* streaming service style on hover */
-#streaming-services > a{
-   transition: transform .5s;
-}
-
-#streaming-services > a:hover{
-   transform:translateY(-10px);
-}
 /* movie information styling */
 #general-movie-info > li{
    border-bottom: 1px solid black;

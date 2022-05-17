@@ -6,7 +6,6 @@ var searchBar = document.querySelector("#search-bar");
 var streamingServices = document.querySelector("#streaming-services");
 var posterDisplay = document.querySelector("#poster-display");
 var trailerDisplay = document.querySelector("#trailer-display");
-var playIcon = document.querySelector("#play-icon");
 var clearBtn = document.querySelector("#clear-btn")
 var movieInfo = document.getElementById("movie-info");
 var movieTitle = document.getElementById("movie-title");
@@ -15,11 +14,6 @@ var slideInBtn = document.querySelector(".slidein");
 var plot = document.querySelector(".plot-overview");
 
 
-
-// function for toggling the play button. It kicks in everytime a trailer is displayed. See displayTrailer() function
-var playIconToggle = function(){
-   playIcon.classList.toggle("display-toggle-block", "display-toggle-none");
-};
 
 // function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
 var clearBtnToggle = function(){

@@ -32,9 +32,8 @@
          <form id="search-form" class="control column field box is-3">
 
             <label class="label has-text-centered is-size-3" for="search-bar is-size-1">Movie title</label>
-            <div class="control">
-               <input class="input is-rounded" name="search-bar" id='search-bar' placeholder="Enter title here"
-                  type="text">
+            <div class="control has-text-centered">
+               <input class="input is-rounded" name="search-bar" id='search-bar' placeholder="Enter title here" type="text">
 
                <button id="btn" class="mt-5  button is-rounded is-primary is-hovered">Search</button>
             </div>
@@ -86,6 +85,7 @@
             
            
 
+         </div>
       </div>
 
       <!-- Second Row with serach history and IMDB info -->
@@ -111,22 +111,20 @@
                <img src="./assets/images/play-icon.png" alt="play-icon" id="play-icon" class="display-toggle-none">
                <!-- <div class="is-size-3 has-text-weight-bold trailer-text">Watch Trailer</div> -->
             </figure>
-            <figure class="mx-3 inline-block" id ='trailer-display'>
+            <div class="mx-3" id ='trailer-display'>
                
-            </figure>
+            </div>
          </div>
 
       </div>
 
-      <div id="title-poster"></div>
-      <div id="imdb-section"></div>
 
-      <!-- Streaming service container -->
-      <div class="section">
-         <div class="columns" id="streaming-services">
-
-         </div>
-      </div>
+       <!-- Streaming service container -->
+       <div class="section">
+          <div class="columns" id="streaming-services">
+            
+          </div>
+       </div>
    </main>
    <!-- The Modal -->
    <div id="myModal" class="modal">
