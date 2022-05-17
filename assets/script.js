@@ -6,7 +6,6 @@ var searchBar = document.querySelector("#search-bar");
 var streamingServices = document.querySelector("#streaming-services");
 var posterDisplay = document.querySelector("#poster-display");
 var trailerDisplay = document.querySelector("#trailer-display");
-var playIcon = document.querySelector("#play-icon");
 var clearBtn = document.querySelector("#clear-btn")
 var movieInfo = document.getElementById("movie-info");
 var movieTitle = document.getElementById("movie-title");
@@ -16,15 +15,13 @@ var plot = document.querySelector(".plot-overview");
 
 
 
-// function for toggling the play button. It kicks in everytime a trailer is displayed. See displayTrailer() function
-var playIconToggle = function(){
-   playIcon.classList.toggle("display-toggle-block", "display-toggle-none");
-};
-
 // function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
 var clearBtnToggle = function(){
    clearBtn.classList.toggle("display-toggle-block", "display-toggle-none");
 };
+var modal = document.getElementById("myModal");
+var modalText = document.getElementById("modal-text");
+var closeBtn= document.getElementById("close-btn");
 
 
 // Initializing necessary variables
@@ -32,30 +29,30 @@ var currentSearchArr = []; // Array to keep track of user searches.
 var streamServiceObj = {}; // Needed for later
 
 // display the streaming service icons
-var displayStreamingServices = function(iconUrlArr, serviceLinkArr){
+var displayStreamingServices = function (iconUrlArr, serviceLinkArr) {
    console.log(streamServiceObj);
    streamingServices.textContent = "";
-   for (var i=0;i<iconUrlArr.length;i++){
-      // create an anchore element for linkin the icons to the corresponding services
+   for (var i = 0; i < iconUrlArr.length; i++) {
+      // create an anchor element for linkin the icons to the corresponding services
       var serviceAnchore = document.createElement("a");
       serviceAnchore.setAttribute("href", serviceLinkArr[i]);
       serviceAnchore.setAttribute("target", "_blank");
       serviceAnchore.className = "column";
       // create an img element for the icons
       var iconImg = document.createElement("img");
-      iconImg.setAttribute("src",iconUrlArr[i]);
+      iconImg.setAttribute("src", iconUrlArr[i]);
 
       serviceAnchore.appendChild(iconImg);
 
       streamingServices.appendChild(serviceAnchore);
    };
-   
+
 };
 
 // get the URL for the streaming services icons.
 // There is a really nasty nested loop in here. We may have to optimize it later.
 // I think it is good enough just for the MVP
-var getIconUrls = function(iconIdArr){
+var getIconUrls = function (iconIdArr) {
    var serviceIconUrl = [];
    // use fetch to get the necessary source object containing link to the icons
    var apiUrl="https://api.watchmode.com/v1/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
@@ -63,10 +60,10 @@ var getIconUrls = function(iconIdArr){
       if(response.ok){
          response.json().then(function(data){
             // iterate over the list of icon IDs
-            for (var i=0;i<iconIdArr.length;i++){
+            for (var i = 0; i < iconIdArr.length; i++) {
                // for every icon ID (currIconId) from previous loop, match that icons ID with the API Obj
                var currIconId = iconIdArr[i];
-               for (var j=0;j<data.length;j++){
+               for (var j = 0; j < data.length; j++) {
                   if (currIconId === data[j].id) {
                      serviceIconUrl.push(data[j].logo_100px);
                   };
@@ -126,7 +123,7 @@ var displayMovieInfo = function(obj){
 
 
 // Get the information for movie (Streaming service) using the previously obtained ID from GetMovieID function.
-var getMovieInfo = function(id){ 
+var getMovieInfo = function (id) {
    // initialize an array to hold all the streaming services
    var streamServiceArr = [];
    var iconIds = [];
@@ -168,18 +165,19 @@ var getMovieInfo = function(id){
             displayMovieInfo(streamServiceObj);
          });
       } else {
-         // this will be replace with modals later 
-         alert("Streaming Source not Found!");
+         // alert("Streaming Source not Found!");
+         showModal();
+         modalText.innerHTML = "<p>Streaming source not found!</p>"
       }
    });
-   
+
 };
 
 // display Movie poster
-var displayPoster = function(posterUrl) {
+var displayPoster = function (posterUrl) {
    posterDisplay.textContent = "";
    var posterImgEl = document.createElement("img");
-   posterImgEl.setAttribute("src",posterUrl);
+   posterImgEl.setAttribute("src", posterUrl);
    posterImgEl.setAttribute("alt", "Movie Poster");
    posterDisplay.appendChild(posterImgEl);
 };
@@ -227,7 +225,7 @@ var getMovieId = function(movieName){
 
    // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_field=name&search_value=" + movieName;
 
-   fetch(apiUrl).then(function(response){
+   fetch(apiUrl).then(function (response) {
       // check if the response is ok
       if(response.ok){
          response.json().then(function(data){
@@ -239,11 +237,12 @@ var getMovieId = function(movieName){
             var poster = data.results[0].image_url;
             displayPoster(poster);
             getMovieInfo(movieId);
-            
+
          });
       } else {
-         // This will be replaced with modal
-         alert("Something went wrong!");
+         // alert("Something went wrong!");
+         showModal();
+         modalText.innerHTML = "<p>Something went wrong!</p>";
       }
    });
 };
@@ -268,43 +267,43 @@ var displaySearchedMovie = function(movieName){
 
 
 // This function will take the currentSearchArr and save it in the local storage.
-// We will call this function everytime the currentSearchArr updates. In other words:
-// Everytime the user makes a search using the form.
+// We will call this function every time the currentSearchArr updates. In other words:
+// Every time the user makes a search using the form.
 
-var saveSearchHistory = function(currentSearchArr){
+var saveSearchHistory = function (currentSearchArr) {
    localStorage.setItem("Current-Searches", JSON.stringify(currentSearchArr));
 };
 
 
 // Load the saved search history from the localStorage. This function is going to be called
 // as soon as the page is loaded.
-var loadSearchHistory = function(){
+var loadSearchHistory = function () {
    // save the list of searches in a temporary variable storedSearchArr;
    var storedSearchArr = JSON.parse(localStorage.getItem("Current-Searches"));
    // if no previous data is saved in the local storage, just initialize an emtpy list for current searches.
    if (!storedSearchArr) {
       storedSearchArr = [];
-      
+
    }
-   
+
    // append all the movie names stored in the list through a for loop
-   for (var i=0;i<storedSearchArr.length;i++){
+   for (var i = 0; i < storedSearchArr.length; i++) {
       displaySearchedMovie(storedSearchArr[i]);
    };
-   
+
 };
 
 // Search for the movie with this function. 
 // This function will call the 'fetch' functions and initiate the search for finding the streaming services
 // Specifically, the getMovieId() function will be called. It will call the getMovieInfo() function
 // It will also add the searched movie into the currentSearchArr global array. This array is saved in the
-// local stroage (see the function saveSearchHistory).
-var searchFormHandler = function(event){
+// local storage (see the function saveSearchHistory).
+var searchFormHandler = function (event) {
    // stop the page from refreshing
    event.preventDefault();
    var movieTitleSearched = searchBar.value.trim(); //get the searched movie title
-   
-   if (movieTitleSearched){
+
+   if (movieTitleSearched) {
       getMovieId(movieTitleSearched);
       // display the movie name in the search history if it doesn't exist already
       // use conditionals
@@ -315,12 +314,31 @@ var searchFormHandler = function(event){
        
       };
    } else {
-      // will be replaced with modal later 
-      alert("Please enter a movie name")
+      // alert("Please enter a title");
+      showModal();
+      modalText.innerHTML = "<p>Please enter a title.</p>";
+   }
+};
+
+function showModal() {
+   //----------START MODAL SECTION----------//
+   modal.style.display = "block";
+   console.log(modal);
+   //user can close the modal by clicking the (x) or clicking outside of the modal
+   document.getElementById("close-btn").addEventListener("click", function(event){
+      var close = event.target.getAttribute("id");
+      if (close="close-btn") {modal.style.display = "none";
+      }
+   })
+   window.onclick = function (event) {
+      if (event.target == modal) {
+         modal.style.display = "none";
+      }
    }
 
-
 };
+//-----------END MODAL SECTION-----------//
+
 
 // The function that displays movie info if their names are clicked in the Search History
 var previousSearchClickHandler = function(event){
