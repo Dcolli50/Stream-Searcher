@@ -1,6 +1,6 @@
 
 # Stream-Searcher
-Click [here]() for the deployed application.
+Click [here](https://dcolli50.github.io/Stream-Searcher/) for the deployed application.
 
 ## Introduction
 This application shows general information, and streaming services about movies that can be inputted by an user. It saves any searched movies in the localStorage
