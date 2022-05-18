@@ -90,7 +90,7 @@ var displayMovieInfo = function (obj) {
 
    // use a for loop to display other information as list elements
    // make an array with texts to be appended.
-   var texts = ["Type: " + obj.type, "Release Date: " + obj.date, "Genre: " + obj.genreArr.toString()];
+   var texts = ["Type: " + obj.type, "Release Date: " + obj.date, "Genre: " + obj.genreArr.toString(), "Content Rating: " + obj.contentRating];
    for (var i = 0; i < texts.length; i++) {
       var infoEl = document.createElement("li");
       infoEl.textContent = texts[i];
@@ -103,7 +103,6 @@ var displayMovieInfo = function (obj) {
    ratingTag.textContent = obj.rating;
    ratingTag.classList = "tag is-success";
    ratingEl.appendChild(ratingTag);
-
 
    var scoreEl = document.createElement("li");
    scoreEl.textContent = "Critic Score: ";
@@ -140,7 +139,6 @@ var getMovieInfo = function (id) {
                   streamServiceArr.push(data.sources[i].name);
                   iconIds.push(data.sources[i].source_id);
                   serviceLinks.push(data.sources[i].web_url);
-
                }
             };
             // add general movie info
@@ -148,6 +146,7 @@ var getMovieInfo = function (id) {
             streamServiceObj.type = data.type;
             streamServiceObj.date = data.release_date;
             streamServiceObj.genreArr = data.genre_names;
+            streamServiceObj.contentRating = data.us_rating;
             streamServiceObj.rating = data.user_rating;
             streamServiceObj.score = data.critic_score;
             // add movie plot 
