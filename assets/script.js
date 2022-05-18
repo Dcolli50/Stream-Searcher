@@ -298,6 +298,9 @@ var getMovieId = function(movieName){
                displayPoster(poster);
                getMovieInfo(movieId);
 
+            } else if(movieObjArr.length === 0) {
+               showModal();
+               modalText.innerHTML = "<p> 😔 </br> Sorry! We could not find this movie. Please check the spellings.</p>"
             } else {
                showModal();
                modalText.innerHTML="";
