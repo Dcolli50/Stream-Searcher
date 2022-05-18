@@ -266,7 +266,7 @@ var getMovieId = function(movieName){
                 }
             };
 
-            console.log("Before adding modal: " + movieObjArr);
+         
             if (movieObjArr.length === 1){
                var movieId = movieObjArr[0].id;
                var poster = movieObjArr[0].imgUrl;
@@ -400,9 +400,11 @@ function showModal() {
    //    }
    // })
    window.onclick = function (event) {
-      if (event.target == modal) {
+      if (event.target.getAttribute("class") === "modal") {
          modal.style.display = "none";
-      }
+         var modalContainer = document.querySelector(".modal-content");
+         modalContainer.classList.remove("transparent-modal");
+      };
    }
 };
 //-----------END MODAL SECTION-----------//
