@@ -13,12 +13,30 @@
   transition: transform 2000ms, opacity 2000ms;
 }
 
-/* END of poster Display Animation */
+
 .poster-slidein-end{
   opacity: 1;
   transform:translate(0);
   transition: transform 2000ms, opacity 2000ms;
 }
+/* END of poster Display Animation */
+
+/* movieInfo Display Animation */
+.movieInfo-animation{
+  animation: slidein 2000ms;
+}
+
+@keyframes slidein {
+  0% {
+    opacity: 0;
+    transform: translateX(20vw);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+/* END of movieInfo Display Animation */
 
 /* need to work this style below */
 iframe {

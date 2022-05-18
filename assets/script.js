@@ -90,6 +90,8 @@ var getIconUrls = function (iconIdArr) {
 var displayMovieInfo = function (obj) {
    console.log("Movie Information obj" + obj);
    // clear previous displayed info
+
+   
    GenMovieInfo.textContent = "";
 
    movieInfo.classList = "card-content card";
@@ -123,6 +125,10 @@ var displayMovieInfo = function (obj) {
 
    GenMovieInfo.appendChild(ratingEl);
    GenMovieInfo.appendChild(scoreEl);
+   
+   
+   movieInfo.classList.add("movieInfo-animation"); //this line is for animation
+   
 
    // make the slidein button appear
    slideInBtn.style.display = 'block';
@@ -405,6 +411,7 @@ function showModal() {
 // The function that displays movie info if their names are clicked in the Search History
 var previousSearchClickHandler = function (event) {
    var clickedElName = event.target.textContent;
+   movieInfo.classList.remove("movieInfo-animation"); // this line is for animation
    getMovieId(clickedElName);
 };
 
