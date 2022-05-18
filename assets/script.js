@@ -108,19 +108,52 @@ var displayMovieInfo = function (obj) {
       GenMovieInfo.appendChild(infoEl);
    };
    // the last two list items with badges
+
+   // The user rating
    var ratingEl = document.createElement("li");
    ratingEl.textContent = "User Rating: ";
    var ratingTag = document.createElement("span");
+
+   // user rating badge color determine
    ratingTag.textContent = obj.rating;
-   ratingTag.classList = "tag is-success";
+   if(!obj.rating) {
+      ratingTag.textContent = "Unavailable";
+      ratingTag.classList = "tag is-white";
+
+   } else {
+      if (obj.rating >=0 && obj.rating < 3){
+         ratingTag.classList = "tag is-danger";
+      } else if (obj.rating >= 3 && obj.rating < 7) {
+         ratingTag.classList = "tag is-warning";
+      } else {
+         ratingTag.classList = "tag is-success";
+      }
+   }
    ratingEl.appendChild(ratingTag);
 
-
+   // The critic Score
    var scoreEl = document.createElement("li");
    scoreEl.textContent = "Critic Score: ";
    var scoreTag = document.createElement("li");
    scoreTag.textContent = obj.score;
-   scoreTag.classList = "tag is-danger";
+
+   // critic score badge color determine
+   scoreTag.textContent = obj.score;
+
+   if(!obj.score) {
+      scoreTag.textContent = "Unavailable";
+      scoreTag.classList = "tag is-white";
+
+   } else {
+      if (obj.score >=0 && obj.score < 30){
+         scoreTag.classList = "tag is-danger";
+      } else if (obj.score >= 30 && obj.score < 70) {
+         scoreTag.classList = "tag is-warning";
+      } else {
+         scoreTag.classList = "tag is-success";
+      }
+   }
+         
    scoreEl.appendChild(scoreTag);
 
    GenMovieInfo.appendChild(ratingEl);
@@ -206,15 +239,6 @@ var displayPoster = function (posterUrl) {
 // display Movie trailer
 var displayTrailer = function (obj) {
 
-   // trailerDisplay.textContent = '';
-   // var anchoreEl = document.createElement("iframe");
-   // anchoreEl.setAttribute("framborder", '0');
-   // trailerLink = trailerLink.replace("watch?v=", "embed/");
-   // anchoreEl.setAttribute("src", trailerLink);
-   // trailerDisplay.appendChild(anchoreEl);
-
-   // playIconToggle();
-
    trailerDisplay.textContent = '';
 
    if (!obj.trailerLink) {
@@ -224,6 +248,7 @@ var displayTrailer = function (obj) {
       var badThumbnail = document.createElement("img");
       badThumbnail.setAttribute("src", "./assets/images/error.jpg");
       badThumbnail.setAttribute("title", "No Trailer found. Click here to search on YouTube!");
+      badThumbnail.style.width = "60%"; //setting the size of error image
       anchoreEl.appendChild(badThumbnail);
       trailerDisplay.appendChild(anchoreEl);
    } else {
