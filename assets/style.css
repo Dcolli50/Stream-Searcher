@@ -262,6 +262,12 @@ iframe {
 
 }
 
+@media screen and (max-width: 769px){
+  #streaming-services{
+    text-align:center;
+  }
+}
+
 @media screen and (max-width: 760px){
   .plot-overview{
     width:60%;
