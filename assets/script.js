@@ -12,6 +12,15 @@ var movieTitle = document.getElementById("movie-title");
 var GenMovieInfo = document.getElementById("general-movie-info");
 var slideInBtn = document.querySelector(".slidein");
 var plot = document.querySelector(".plot-overview");
+var testPoster = document.getElementById("test-poster");
+
+
+// function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
+var clearBtnToggle = function () {
+   clearBtn.classList.toggle("display-toggle-block", "display-toggle-none");
+};
+
+// Modal variable declaration
 var modal = document.getElementById("myModal");
 var modalText = document.getElementById("modal-text");
 var closeBtn = document.getElementById("close-btn");
@@ -53,7 +62,7 @@ var displayStreamingServices = function (iconUrlArr, serviceLinkArr) {
 var getIconUrls = function (iconIdArr) {
    var serviceIconUrl = [];
    // use fetch to get the necessary source object containing link to the icons
-   var apiUrl = "https://api.watchmode.com/v1/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
+   var apiUrl = "https://api.watchmode.com/v1/sources/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr";
    fetch(apiUrl).then(function (response) {
       if (response.ok) {
          response.json().then(function (data) {
@@ -81,6 +90,8 @@ var getIconUrls = function (iconIdArr) {
 var displayMovieInfo = function (obj) {
    console.log("Movie Information obj" + obj);
    // clear previous displayed info
+
+
    GenMovieInfo.textContent = "";
 
    movieInfo.classList = "card-content card";
@@ -97,22 +108,60 @@ var displayMovieInfo = function (obj) {
       GenMovieInfo.appendChild(infoEl);
    };
    // the last two list items with badges
+
+   // The user rating
    var ratingEl = document.createElement("li");
    ratingEl.textContent = "User Rating: ";
    var ratingTag = document.createElement("span");
+
+   // user rating badge color determine
    ratingTag.textContent = obj.rating;
-   ratingTag.classList = "tag is-success";
+   if (!obj.rating) {
+      ratingTag.textContent = "Unavailable";
+      ratingTag.classList = "tag is-white";
+
+   } else {
+      if (obj.rating >= 0 && obj.rating < 3) {
+         ratingTag.classList = "tag is-danger";
+      } else if (obj.rating >= 3 && obj.rating < 7) {
+         ratingTag.classList = "tag is-warning";
+      } else {
+         ratingTag.classList = "tag is-success";
+      }
+   }
    ratingEl.appendChild(ratingTag);
 
+   // The critic Score
    var scoreEl = document.createElement("li");
    scoreEl.textContent = "Critic Score: ";
    var scoreTag = document.createElement("li");
    scoreTag.textContent = obj.score;
-   scoreTag.classList = "tag is-danger";
+
+   // critic score badge color determine
+   scoreTag.textContent = obj.score;
+
+   if (!obj.score) {
+      scoreTag.textContent = "Unavailable";
+      scoreTag.classList = "tag is-white";
+
+   } else {
+      if (obj.score >= 0 && obj.score < 30) {
+         scoreTag.classList = "tag is-danger";
+      } else if (obj.score >= 30 && obj.score < 70) {
+         scoreTag.classList = "tag is-warning";
+      } else {
+         scoreTag.classList = "tag is-success";
+      }
+   }
+
    scoreEl.appendChild(scoreTag);
 
    GenMovieInfo.appendChild(ratingEl);
    GenMovieInfo.appendChild(scoreEl);
+
+
+   movieInfo.classList.add("movieInfo-animation"); //this line is for animation
+
 
    // make the slidein button appear
    slideInBtn.style.display = 'block';
@@ -127,9 +176,9 @@ var getMovieInfo = function (id) {
    var iconIds = [];
    var serviceLinks = [];
 
-   var apiUrl = "https://api.watchmode.com/v1/title/" + id + "/details/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&append_to_response=sources";
+   var apiUrl = "https://api.watchmode.com/v1/title/" + id + "/details/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr&append_to_response=sources";
 
-   // var apiUrl2 = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt";
+   // var apiUrl2 = "https://api.watchmode.com/v1/title/" + id +"/sources/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr";
 
    fetch(apiUrl).then(function (response) {
       if (response.ok) {
@@ -153,7 +202,7 @@ var getMovieInfo = function (id) {
             streamServiceObj.plot = data.plot_overview;
             // add trailer info
             streamServiceObj.trailerLink = data.trailer;
-            streamServiceObj.trailerThumbnail = data.trailer_thumbnail;
+            streamServiceObj.posterUrl = data.poster;
             // add stream service info
             streamServiceObj.serviceLinks = serviceLinks;
             streamServiceObj.serviceNames = streamServiceArr;
@@ -176,20 +225,19 @@ var displayPoster = function (posterUrl) {
    var posterImgEl = document.createElement("img");
    posterImgEl.setAttribute("src", posterUrl);
    posterImgEl.setAttribute("alt", "Movie Poster");
+   // animate the appearance start
+   posterImgEl.className = "poster-slidein-start";
+   requestAnimationFrame(() => {
+      posterImgEl.classList.remove("poster-slidein-start");
+      posterImgEl.classList.add("poster-slidein-end");
+   });
+   // animate the apparance end
+   posterImgEl.setAttribute("title", "Click to Enlarge");
    posterDisplay.appendChild(posterImgEl);
 };
 
 // display Movie trailer
 var displayTrailer = function (obj) {
-
-   // trailerDisplay.textContent = '';
-   // var anchoreEl = document.createElement("iframe");
-   // anchoreEl.setAttribute("framborder", '0');
-   // trailerLink = trailerLink.replace("watch?v=", "embed/");
-   // anchoreEl.setAttribute("src", trailerLink);
-   // trailerDisplay.appendChild(anchoreEl);
-
-   // playIconToggle();
 
    trailerDisplay.textContent = '';
 
@@ -200,6 +248,7 @@ var displayTrailer = function (obj) {
       var badThumbnail = document.createElement("img");
       badThumbnail.setAttribute("src", "./assets/images/error.jpg");
       badThumbnail.setAttribute("title", "No Trailer found. Click here to search on YouTube!");
+      badThumbnail.style.width = "60%"; //setting the size of error image
       anchoreEl.appendChild(badThumbnail);
       trailerDisplay.appendChild(anchoreEl);
    } else {
@@ -216,11 +265,12 @@ var displayTrailer = function (obj) {
 
 // Get the WatchMode ID for the movie through this function
 var getMovieId = function (movieName) {
+   var movieObjArr = [];
    var apiUrl =
-      "https://api.watchmode.com/v1/autocomplete-search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_value=" + movieName + "&search_type=2";
+      "https://api.watchmode.com/v1/autocomplete-search/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr&search_value=" + movieName + "&search_type=2";
 
 
-   // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=ntfiTPIROJRnm1mIwd13rp7RXDCL6n3OeIxphmHt&search_field=name&search_value=" + movieName;
+   // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr&search_field=name&search_value=" + movieName;
 
    fetch(apiUrl).then(function (response) {
       // check if the response is ok
@@ -228,13 +278,55 @@ var getMovieId = function (movieName) {
          response.json().then(function (data) {
 
             // if there are multiple titles containing the movie name. Use a loop to show it all.
+            for (var i = 0; i < data.results.length; i++) {
+               var movieObj = {
+                  id: data.results[i].id,
+                  name: data.results[i].name,
+                  imgUrl: data.results[i].image_url
+               }
 
-            console.log(data.results[0].id);
-            var movieId = data.results[0].id;
-            var poster = data.results[0].image_url;
-            displayPoster(poster);
-            getMovieInfo(movieId);
+               if (!movieObjArr.filter(obj => obj.name === data.results[i].name).length > 0) {
+                  /* movieObjArr dose not contain the element we're looking for */
+                  movieObjArr.push(movieObj);
+               }
+            };
 
+
+            if (movieObjArr.length === 1) {
+               var movieId = movieObjArr[0].id;
+               var poster = movieObjArr[0].imgUrl;
+               displayPoster(poster);
+               getMovieInfo(movieId);
+
+            } else if (movieObjArr.length === 0) {
+               showModal();
+               modalText.innerHTML = "<p> 😔 </br> Sorry! We could not find this movie. Please check the spellings.</p>"
+            } else {
+               showModal();
+               modalText.innerHTML = "";
+               modalText.innerHTML = "<h2 class='modal-header'> Did you Mean? </h2>";
+               for (var i = 0; i < movieObjArr.length; i++) {
+                  var text = "<li class='modal-content-movie list-item box' data-image='" + movieObjArr[i].imgUrl + "' id='" + movieObjArr[i].id + "'>" + movieObjArr[i].name + "</li>";
+                  modalText.innerHTML += text;
+               };
+
+               document.querySelector('.modal').addEventListener('click', function (event) {
+                  var clickedClass = event.target;
+                  if (clickedClass.classList.contains("modal-content-movie")) {
+                     var movieId = clickedClass.getAttribute("id");
+                     var poster = clickedClass.getAttribute("data-image");
+                     displayPoster(poster);
+                     getMovieInfo(movieId);
+                     var movieTitleSearched = clickedClass.textContent;
+                     if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())) {
+
+                        displaySearchedMovie(movieTitleSearched);
+
+                     };
+                     modal.style.display = 'none';
+                  }
+               });
+            }
          });
       } else {
          showModal();
@@ -304,11 +396,11 @@ var searchFormHandler = function (event) {
       // display the movie name in the search history if it doesn't exist already
       // use conditionals
 
-      if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())) {
+      // if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())){
 
-         displaySearchedMovie(movieTitleSearched);
+      //    displaySearchedMovie(movieTitleSearched);
 
-      };
+      // };
    } else {
       showModal();
       modalText.innerHTML = "<p>Please enter a title!<br> Click outside of this box to exit.</p>";
@@ -318,18 +410,19 @@ var searchFormHandler = function (event) {
 function showModal() {
    //----------START MODAL SECTION----------//
    modal.style.display = "block";
-   console.log(modal);
    //user can close the modal by clicking the (x) or clicking outside of the modal
-   document.getElementById("close-btn").addEventListener("click", function (event) {
-      var close = event.target.getAttribute("id");
-      if (close = "close-btn") {
-         modal.style.display = "none";
-      }
-   })
+   // document.getElementById("close-btn").addEventListener("click", function(event){
+   //    var close = event.target.getAttribute("id");
+   //    if (close === "close-btn") {
+   //       modal.style.display = "none";
+   //    }
+   // })
    window.onclick = function (event) {
-      if (event.target == modal) {
+      if (event.target.getAttribute("class") === "modal") {
          modal.style.display = "none";
-      }
+         var modalContainer = document.querySelector(".modal-content");
+         modalContainer.classList.remove("transparent-modal");
+      };
    }
 };
 //-----------END MODAL SECTION-----------//
@@ -338,6 +431,7 @@ function showModal() {
 // The function that displays movie info if their names are clicked in the Search History
 var previousSearchClickHandler = function (event) {
    var clickedElName = event.target.textContent;
+   movieInfo.classList.remove("movieInfo-animation"); // this line is for animation
    getMovieId(clickedElName);
 };
 
@@ -366,6 +460,7 @@ var showPlotOverview = function (obj) {
    plot.appendChild(plotText);
 };
 
+
 loadSearchHistory();
 // adding the event listern and handler for showing plot overview for the movies
 slideInBtn.addEventListener("click", function () {
@@ -381,3 +476,20 @@ previousSearches.addEventListener("click", previousSearchClickHandler);
 
 // adding the event listener and handler for the clear button. It will call the clear function
 clearBtn.addEventListener("click", clear);
+
+// adding the event listener for poster clicking
+posterDisplay.addEventListener('click', (event) => {
+   showModal();
+   modalText.innerHTML = "<img class='poster-in-modal fade-out' src=" + streamServiceObj.posterUrl + ">";
+   // modalText.innerHTML = "<img class='poster-in-modal fade-out' src='./assets/images/test-poster.jpg'>"
+
+   requestAnimationFrame(() => {
+      var posterInModal = document.querySelector(".poster-in-modal");
+      posterInModal.classList.remove("fade-out");
+   });
+
+   var modalContainer = document.querySelector(".modal-content");
+   console.log(modalContainer);
+   modalContainer.classList.add("transparent-modal");
+
+});
