@@ -218,7 +218,7 @@ iframe {
    border-bottom: 1px solid black;
    list-style-type: none;
    cursor: pointer;
-   max-width:30%;
+   min-width:30%;
    text-align: center;
    margin:auto;
 }
@@ -236,4 +236,34 @@ iframe {
    border-bottom: 2px solid;
    width: 30%;
    font-weight: 700;
+}
+
+/* media Queries for responsiveness */
+
+
+/* for touch screens and smaller*/
+@media screen and (max-width: 1015px){
+  .media-container{
+    min-width:fit-content;
+  }
+}
+
+@media screen and (max-width: 890px){
+  .media-container{
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .plot-overview{
+    height: fit-content;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+}
+
+@media screen and (max-width: 760px){
+  .plot-overview{
+    width:60%;
+  }
 }
