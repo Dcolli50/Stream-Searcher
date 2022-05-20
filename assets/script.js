@@ -16,7 +16,7 @@ var testPoster = document.getElementById("test-poster");
 
 
 // function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
-var clearBtnToggle = function(){
+var clearBtnToggle = function () {
    clearBtn.classList.toggle("display-toggle-block", "display-toggle-none");
 };
 
@@ -91,7 +91,7 @@ var displayMovieInfo = function (obj) {
    console.log("Movie Information obj" + obj);
    // clear previous displayed info
 
-   
+
    GenMovieInfo.textContent = "";
 
    movieInfo.classList = "card-content card";
@@ -101,7 +101,7 @@ var displayMovieInfo = function (obj) {
 
    // use a for loop to display other information as list elements
    // make an array with texts to be appended.
-   var texts = ["Type: " + obj.type, "Release Date: " + obj.date, "Genre: " + obj.genreArr.toString()];
+   var texts = ["Type: " + obj.type, "Release Date: " + obj.date, "Genre: " + obj.genreArr.toString(), "Content Rating: " + obj.contentRating];
    for (var i = 0; i < texts.length; i++) {
       var infoEl = document.createElement("li");
       infoEl.textContent = texts[i];
@@ -116,12 +116,12 @@ var displayMovieInfo = function (obj) {
 
    // user rating badge color determine
    ratingTag.textContent = obj.rating;
-   if(!obj.rating) {
+   if (!obj.rating) {
       ratingTag.textContent = "Unavailable";
       ratingTag.classList = "tag is-white";
 
    } else {
-      if (obj.rating >=0 && obj.rating < 3){
+      if (obj.rating >= 0 && obj.rating < 3) {
          ratingTag.classList = "tag is-danger";
       } else if (obj.rating >= 3 && obj.rating < 7) {
          ratingTag.classList = "tag is-warning";
@@ -140,12 +140,12 @@ var displayMovieInfo = function (obj) {
    // critic score badge color determine
    scoreTag.textContent = obj.score;
 
-   if(!obj.score) {
+   if (!obj.score) {
       scoreTag.textContent = "Unavailable";
       scoreTag.classList = "tag is-white";
 
    } else {
-      if (obj.score >=0 && obj.score < 30){
+      if (obj.score >= 0 && obj.score < 30) {
          scoreTag.classList = "tag is-danger";
       } else if (obj.score >= 30 && obj.score < 70) {
          scoreTag.classList = "tag is-warning";
@@ -153,15 +153,15 @@ var displayMovieInfo = function (obj) {
          scoreTag.classList = "tag is-success";
       }
    }
-         
+
    scoreEl.appendChild(scoreTag);
 
    GenMovieInfo.appendChild(ratingEl);
    GenMovieInfo.appendChild(scoreEl);
-   
-   
+
+
    movieInfo.classList.add("movieInfo-animation"); //this line is for animation
-   
+
 
    // make the slidein button appear
    slideInBtn.style.display = 'block';
@@ -188,7 +188,6 @@ var getMovieInfo = function (id) {
                   streamServiceArr.push(data.sources[i].name);
                   iconIds.push(data.sources[i].source_id);
                   serviceLinks.push(data.sources[i].web_url);
-
                }
             };
             // add general movie info
@@ -196,6 +195,7 @@ var getMovieInfo = function (id) {
             streamServiceObj.type = data.type;
             streamServiceObj.date = data.release_date;
             streamServiceObj.genreArr = data.genre_names;
+            streamServiceObj.contentRating = data.us_rating;
             streamServiceObj.rating = data.user_rating;
             streamServiceObj.score = data.critic_score;
             // add movie plot 
@@ -232,7 +232,7 @@ var displayPoster = function (posterUrl) {
       posterImgEl.classList.add("poster-slidein-end");
    });
    // animate the apparance end
-   posterImgEl.setAttribute("title","Click to Enlarge");
+   posterImgEl.setAttribute("title", "Click to Enlarge");
    posterDisplay.appendChild(posterImgEl);
 };
 
@@ -264,10 +264,10 @@ var displayTrailer = function (obj) {
 
 
 // Get the WatchMode ID for the movie through this function
-var getMovieId = function(movieName){
+var getMovieId = function (movieName) {
    var movieObjArr = [];
-   var apiUrl = 
-   "https://api.watchmode.com/v1/autocomplete-search/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr&search_value=" + movieName +"&search_type=2";
+   var apiUrl =
+      "https://api.watchmode.com/v1/autocomplete-search/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr&search_value=" + movieName + "&search_type=2";
 
 
    // var apiUrl2 = "https://api.watchmode.com/v1/search/?apiKey=B56CG2oDO7zdr9jqLgqqzG28kuvsMfoBfC9hQFFr&search_field=name&search_value=" + movieName;
@@ -278,7 +278,7 @@ var getMovieId = function(movieName){
          response.json().then(function (data) {
 
             // if there are multiple titles containing the movie name. Use a loop to show it all.
-            for (var i=0;i<data.results.length;i++){
+            for (var i = 0; i < data.results.length; i++) {
                var movieObj = {
                   id: data.results[i].id,
                   name: data.results[i].name,
@@ -288,55 +288,45 @@ var getMovieId = function(movieName){
                if (!movieObjArr.filter(obj => obj.name === data.results[i].name).length > 0) {
                   /* movieObjArr dose not contain the element we're looking for */
                   movieObjArr.push(movieObj);
-                }
+               }
             };
 
-         
-            if (movieObjArr.length === 1){
+
+            if (movieObjArr.length === 1) {
                var movieId = movieObjArr[0].id;
                var poster = movieObjArr[0].imgUrl;
                displayPoster(poster);
                getMovieInfo(movieId);
 
-            } else if(movieObjArr.length === 0) {
+            } else if (movieObjArr.length === 0) {
                showModal();
                modalText.innerHTML = "<p> 😔 </br> Sorry! We could not find this movie. Please check the spellings.</p>"
             } else {
                showModal();
-               modalText.innerHTML="";
+               modalText.innerHTML = "";
                modalText.innerHTML = "<h2 class='modal-header'> Did you Mean? </h2>";
-               for (var i=0;i<movieObjArr.length;i++){
-               var text = "<li class='modal-content-movie list-item box' data-image='"+movieObjArr[i].imgUrl+"' id='"+ movieObjArr[i].id+"'>" + movieObjArr[i].name + "</li>";
-               modalText.innerHTML += text;
+               for (var i = 0; i < movieObjArr.length; i++) {
+                  var text = "<li class='modal-content-movie list-item box' data-image='" + movieObjArr[i].imgUrl + "' id='" + movieObjArr[i].id + "'>" + movieObjArr[i].name + "</li>";
+                  modalText.innerHTML += text;
                };
 
-               document.querySelector('.modal').addEventListener('click', function(event){
-               var clickedClass = event.target;
-               if(clickedClass.classList.contains("modal-content-movie")){
-                  var movieId = clickedClass.getAttribute("id");
-                  var poster = clickedClass.getAttribute("data-image");
-                  displayPoster(poster);
-                  getMovieInfo(movieId);
-                  var movieTitleSearched = clickedClass.textContent;
-                  if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())){
-         
-                     displaySearchedMovie(movieTitleSearched);
-                   
-                  };
-                  modal.style.display = 'none';
-               }
-            });
-         }
-            
-            
-            
+               document.querySelector('.modal').addEventListener('click', function (event) {
+                  var clickedClass = event.target;
+                  if (clickedClass.classList.contains("modal-content-movie")) {
+                     var movieId = clickedClass.getAttribute("id");
+                     var poster = clickedClass.getAttribute("data-image");
+                     displayPoster(poster);
+                     getMovieInfo(movieId);
+                     var movieTitleSearched = clickedClass.textContent;
+                     if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())) {
 
+                        displaySearchedMovie(movieTitleSearched);
 
-            // var movieId = data.results[0].id;
-            // var poster = data.results[0].image_url;
-            // displayPoster(poster);
-            // getMovieInfo(movieId);
-
+                     };
+                     modal.style.display = 'none';
+                  }
+               });
+            }
          });
       } else {
          showModal();
@@ -405,11 +395,11 @@ var searchFormHandler = function (event) {
       getMovieId(movieTitleSearched);
       // display the movie name in the search history if it doesn't exist already
       // use conditionals
-      
+
       // if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())){
-         
+
       //    displaySearchedMovie(movieTitleSearched);
-       
+
       // };
    } else {
       showModal();
@@ -489,16 +479,16 @@ previousSearches.addEventListener("click", previousSearchClickHandler);
 clearBtn.addEventListener("click", clear);
 
 // adding the event listener for poster clicking
-posterDisplay.addEventListener('click',(event) => {
+posterDisplay.addEventListener('click', (event) => {
    showModal();
-   modalText.innerHTML = "<img class='poster-in-modal fade-out' src="+streamServiceObj.posterUrl+">";
+   modalText.innerHTML = "<img class='poster-in-modal fade-out' src=" + streamServiceObj.posterUrl + ">";
    // modalText.innerHTML = "<img class='poster-in-modal fade-out' src='./assets/images/test-poster.jpg'>"
-  
-   requestAnimationFrame(()=>{
+
+   requestAnimationFrame(() => {
       var posterInModal = document.querySelector(".poster-in-modal");
       posterInModal.classList.remove("fade-out");
    });
-  
+
    var modalContainer = document.querySelector(".modal-content");
    console.log(modalContainer);
    modalContainer.classList.add("transparent-modal");
