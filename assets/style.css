@@ -209,6 +209,11 @@ iframe {
   padding-right: 0.1rem;
 }
 
+/* for rotating the slidein button when clicked */
+.rotate180{
+  transform: rotate(180deg);
+}
+
 .button-content{
    writing-mode: vertical-lr;
 }

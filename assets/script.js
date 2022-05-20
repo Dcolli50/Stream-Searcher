@@ -474,6 +474,7 @@ var showPlotOverview = function (obj) {
 loadSearchHistory();
 // adding the event listern and handler for showing plot overview for the movies
 slideInBtn.addEventListener("click", function () {
+   slideInBtn.classList.toggle("rotate180");
    showPlotOverview(streamServiceObj);
 });
 
