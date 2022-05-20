@@ -265,6 +265,18 @@ iframe {
     margin-bottom: 12px;
   }
 
+  .slidein-button{
+    flex-direction: column;
+    padding:0.4rem;
+  }
+  .button-content{
+    margin-left:15%;
+  }
+
+  .slidein-button i{
+    transform: rotate(90deg);
+  }
+
 }
 
 @media screen and (max-width: 769px){
@@ -278,3 +290,19 @@ iframe {
     width:60%;
   }
 }
+
+@media screen and (max-width: 545px){
+  .slidein-button {
+    padding-right:22%;
+  }
+  .button-content{
+    writing-mode: horizontal-tb;
+  }
+
+  .slidein-button i {
+    margin-left:50%;
+  }
+}
+
+
+
