@@ -13,6 +13,7 @@ var GenMovieInfo = document.getElementById("general-movie-info");
 var slideInBtn = document.querySelector(".slidein");
 var plot = document.querySelector(".plot-overview");
 var testPoster = document.getElementById("test-poster");
+var overviewBtn = document.getElementById("overview-btn");
 
 
 // function for toggling the clear button. It kicks in everytime a movie name is listed in the search history section
@@ -81,7 +82,7 @@ var getIconUrls = function (iconIdArr) {
          });
       } else {
          showModal();
-         modalText.innerHTML = "<p>Could not get the stream service information!<br> Click outside of this box to exit.</p>"
+         modalText.innerHTML = "<h2>Could not get the stream service information!</h2><br><h5> Click outside of this box to exit.</h5>"
       }
    });
 };
@@ -213,7 +214,7 @@ var getMovieInfo = function (id) {
          });
       } else {
          showModal();
-         modalText.innerHTML = "<p>Streaming source not found!<br> Click outside of this box to exit.</p>"
+         modalText.innerHTML = "<h2>Streaming source not found!</h2><br><h5>Click outside of this box to exit.</h5>"
       }
    });
 
@@ -300,7 +301,7 @@ var getMovieId = function (movieName) {
 
             } else if (movieObjArr.length === 0) {
                showModal();
-               modalText.innerHTML = "<p> 😔 </br> Sorry! We could not find this movie. Please check the spellings.</p>"
+               modalText.innerHTML = "<h2> 😔 </br> Sorry! We could not find this movie. Please check the spellings.</h2>"
             } else {
                showModal();
                modalText.innerHTML = "";
@@ -319,9 +320,7 @@ var getMovieId = function (movieName) {
                      getMovieInfo(movieId);
                      var movieTitleSearched = clickedClass.textContent;
                      if (!currentSearchArr.includes(movieTitleSearched.toUpperCase())) {
-
                         displaySearchedMovie(movieTitleSearched);
-
                      };
                      modal.style.display = 'none';
                   }
@@ -330,7 +329,7 @@ var getMovieId = function (movieName) {
          });
       } else {
          showModal();
-         modalText.innerHTML = "<p>Something went wrong!<br> Click outside of this box to exit.</p>";
+         modalText.innerHTML = "<h2>Something went wrong!<br> Click outside of this box to exit.</h2>";
       }
    });
 };
@@ -403,7 +402,7 @@ var searchFormHandler = function (event) {
       // };
    } else {
       showModal();
-      modalText.innerHTML = "<p>Please enter a title!<br> Click outside of this box to exit.</p>";
+      modalText.innerHTML = "<h2>Please enter a title!</h2><br><h5>Click outside of this box to exit.</h5>";
    }
 };
 
@@ -465,6 +464,8 @@ loadSearchHistory();
 // adding the event listern and handler for showing plot overview for the movies
 slideInBtn.addEventListener("click", function () {
    showPlotOverview(streamServiceObj);
+   overviewBtn.classList.toggle("fa fa-angle-left fa-2x");
+
 });
 
 // adding the event listener and handler to search-form for searching movie by titles

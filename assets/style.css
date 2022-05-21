@@ -128,7 +128,7 @@ iframe {
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #fefefe;
+  background-color: #00d1b2;
   margin: 15% auto;
   /* 15% from the top and centered */
   padding: 20px;
@@ -136,15 +136,21 @@ iframe {
   width: 50%;
   /* Could be more or less, depending on screen size */
   text-align: center;
+  color: white;
 }
 
-/* The Close Button */
+h2 {
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+/* The Close Button
 .close {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
-}
+} */
 
 .close:hover,
 .close:focus {
