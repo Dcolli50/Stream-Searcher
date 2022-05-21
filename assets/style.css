@@ -215,6 +215,11 @@ h2 {
   padding-right: 0.1rem;
 }
 
+/* for rotating the slidein button when clicked */
+.rotate180{
+  transform: rotate(180deg);
+}
+
 .button-content{
    writing-mode: vertical-lr;
 }
@@ -224,7 +229,7 @@ h2 {
    border-bottom: 1px solid black;
    list-style-type: none;
    cursor: pointer;
-   max-width:30%;
+   min-width:30%;
    text-align: center;
    margin:auto;
 }
@@ -243,3 +248,67 @@ h2 {
    width: 30%;
    font-weight: 700;
 }
+
+/* media Queries for responsiveness */
+
+
+/* for touch screens and smaller*/
+@media screen and (max-width: 1015px){
+  .media-container{
+    min-width:fit-content;
+  }
+}
+
+@media screen and (max-width: 890px){
+  .media-container{
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .plot-overview{
+    height: fit-content;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .slidein-button{
+    flex-direction: column;
+    padding:0.4rem;
+  }
+  .button-content{
+    margin-left:15%;
+  }
+
+  .slidein-button i{
+    transform: rotate(90deg);
+  }
+
+}
+
+@media screen and (max-width: 769px){
+  #streaming-services{
+    text-align:center;
+  }
+}
+
+@media screen and (max-width: 760px){
+  .plot-overview{
+    width:60%;
+  }
+}
+
+@media screen and (max-width: 545px){
+  .slidein-button {
+    padding-right:22%;
+  }
+  .button-content{
+    writing-mode: horizontal-tb;
+  }
+
+  .slidein-button i {
+    margin-left:50%;
+  }
+}
+
+
+
