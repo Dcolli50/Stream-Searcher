@@ -207,8 +207,6 @@ h2 {
   overflow: hidden;
 }
 
-
-
 .slidein-button {
   height: 100%;
   padding-left: 0;
@@ -275,6 +273,7 @@ h2 {
     flex-direction: column;
     padding:0.4rem;
   }
+
   .button-content{
     margin-left:15%;
   }
@@ -292,7 +291,7 @@ h2 {
 }
 
 @media screen and (max-width: 760px){
-  .plot-overview{
+  .plot-overview {
     width:60%;
   }
 }
@@ -301,8 +300,9 @@ h2 {
   .slidein-button {
     padding-right:22%;
   }
+
   .button-content{
-    writing-mode: horizontal-tb;
+    writing-mode:horizontal-tb;
   }
 
   .slidein-button i {

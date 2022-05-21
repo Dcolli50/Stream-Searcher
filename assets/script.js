@@ -82,7 +82,7 @@ var getIconUrls = function (iconIdArr) {
          });
       } else {
          showModal();
-         modalText.innerHTML = "<h2>Could not get the stream service information!</h2><br><h5> Click outside of this box to exit.</h5>"
+         modalText.innerHTML = "<h2>Sorry! We could not find any streaming service information!</h2><br><p>(Click outside of this box to exit)</p>"
       }
    });
 };
@@ -214,7 +214,7 @@ var getMovieInfo = function (id) {
          });
       } else {
          showModal();
-         modalText.innerHTML = "<h2>Streaming source not found!</h2><br><h5>Click outside of this box to exit.</h5>"
+         modalText.innerHTML = "<h2>Streaming source not found!</h2><br><p>(Click outside of this box to exit)</p>"
       }
    });
 
@@ -287,7 +287,7 @@ var getMovieId = function (movieName) {
                }
 
                if (!movieObjArr.filter(obj => obj.name === data.results[i].name).length > 0) {
-                  /* movieObjArr dose not contain the element we're looking for */
+                  /* movieObjArr does not contain the element we're looking for */
                   movieObjArr.push(movieObj);
                }
             };
@@ -301,11 +301,11 @@ var getMovieId = function (movieName) {
 
             } else if (movieObjArr.length === 0) {
                showModal();
-               modalText.innerHTML = "<h2> 😔 </br> Sorry! We could not find this movie. Please check the spellings.</h2>"
+               modalText.innerHTML = "<h2> 😔 </br> Sorry! We could not find this movie. Please check your spelling.</h2><br><p>(Click outside of this box to exit)</p>"
             } else {
                showModal();
                modalText.innerHTML = "";
-               modalText.innerHTML = "<h2 class='modal-header'> Did you Mean? </h2>";
+               modalText.innerHTML = "<h2 class='modal-header'> Did you mean? </h2>";
                for (var i = 0; i < movieObjArr.length; i++) {
                   var text = "<li class='modal-content-movie list-item box' data-image='" + movieObjArr[i].imgUrl + "' id='" + movieObjArr[i].id + "'>" + movieObjArr[i].name + "</li>";
                   modalText.innerHTML += text;
@@ -329,7 +329,7 @@ var getMovieId = function (movieName) {
          });
       } else {
          showModal();
-         modalText.innerHTML = "<h2>Something went wrong!<br> Click outside of this box to exit.</h2>";
+         modalText.innerHTML = "<h2>Something went wrong!<br>(Click outside of this box to exit)</h2>";
       }
    });
 };
@@ -402,20 +402,13 @@ var searchFormHandler = function (event) {
       // };
    } else {
       showModal();
-      modalText.innerHTML = "<h2>Please enter a title!</h2><br><h5>Click outside of this box to exit.</h5>";
+      modalText.innerHTML = "<h2>Please enter a title!</h2><br><p>(Click outside of this box to exit)</p>";
    }
 };
 
 function showModal() {
    //----------START MODAL SECTION----------//
    modal.style.display = "block";
-   //user can close the modal by clicking the (x) or clicking outside of the modal
-   // document.getElementById("close-btn").addEventListener("click", function(event){
-   //    var close = event.target.getAttribute("id");
-   //    if (close === "close-btn") {
-   //       modal.style.display = "none";
-   //    }
-   // })
    window.onclick = function (event) {
       if (event.target.getAttribute("class") === "modal") {
          modal.style.display = "none";
@@ -461,12 +454,11 @@ var showPlotOverview = function (obj) {
 
 
 loadSearchHistory();
-// adding the event listern and handler for showing plot overview for the movies
+// adding the event listener and handler for showing plot overview for the movies
 slideInBtn.addEventListener("click", function () {
-   slideInBtn.classList.toggle("rotate180");
+   // slideInBtn.classList.toggle("rotate180");
    showPlotOverview(streamServiceObj);
-   overviewBtn.classList.toggle("fa fa-angle-left fa-2x");
-
+   overviewBtn.classList.toggle("rotate180");
 });
 
 // adding the event listener and handler to search-form for searching movie by titles
